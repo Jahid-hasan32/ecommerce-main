@@ -1,0 +1,127 @@
+from django.shortcuts import render
+from . models import Product, Featured_category , Brand
+from category.models import Category, Subcategory
+from django.contrib.sites.shortcuts import get_current_site
+from banners. models import Banner
+from django.db.models import Q
+from django.http import HttpResponse
+
+# Create your views here.
+
+def home(request):
+    new_arrival = Product.objects.filter(feature_product="new arrival", availabe = True)
+    deal_of_day = Product.objects.filter(feature_product="deal of the day", availabe = True)
+    best_deal = Product.objects.filter(feature_product="best deal", availabe = True)
+    best_sellers = Product.objects.filter(feature_product="best sellers", availabe = True)
+    new_arrival_gadget = Product.objects.filter(feature_product="new arrival gadget", availabe = True)
+
+    
+    products_without_feature = Product.objects.filter(Q(feature_product="") | Q(feature_product__isnull=True), availabe=True)
+
+    shop_by_brand = Brand.objects.all()
+    
+
+    # banner fatching. 
+    main_banner  = Banner.objects.filter(category = 'MAIN')
+    side_banner  = Banner.objects.filter(category = 'SIDE')
+    add_banner  = Banner.objects.filter(category = 'ADD')
+        
+    featured_category = Featured_category.objects.all()
+    
+    context = {
+        'products_without_feature' : products_without_feature, 
+        "new_arrival": new_arrival,
+        "deal_of_day": deal_of_day,
+        'best_deal' : best_deal, 
+        'best_sellers' : best_sellers, 
+        'new_arrival_gadget' : new_arrival_gadget, 
+        'featured_category' : featured_category,
+        'main_banner' : main_banner,
+        'side_banner' : side_banner,
+        'add_banner' : add_banner, 
+        'shop_by_brand'  : shop_by_brand
+    }
+
+    return render(request, 'index.html', context)
+
+# cart 
+def cart(request):
+    return render(request, 'cart.html')
+
+# Products by category. 
+def product_by_cate(request, id, slug):
+    product_cate     = Product.objects.filter( category__id = id, category__slug = slug)
+    sub_category    = Subcategory.objects.filter(main_category__id = id,  main_category__slug = slug)
+    
+    cate_name = None
+    for i in product_cate:
+        cate_name = i.category.slug
+            
+    context = {
+        'product_cate' : product_cate,
+        'cate_name': cate_name,
+        'sub_category' : sub_category,
+    }
+       
+    return render(request, 'products_by_cate.html', context)
+
+#product detail 
+def prod_detail(request, id, name):
+    get_product = Product.objects.get(id=id, name = name)
+    
+    context = {
+        'get_product' : get_product
+    }
+    return render(request, 'prod_detail.html', context)
+
+
+# sub_cate_products 
+
+def prod_by_subcate(request, id, name):
+    prod_by_subcate = Subcategory.objects.filter(id=id, name=name)
+    for i in prod_by_subcate:
+        subc_name = i.name
+        get_all_product_by_subcate = Product.objects.filter(subcategory__name = subc_name)
+
+    context = {
+        'get_all_product_by_subcate' : get_all_product_by_subcate
+    }
+    
+    return render(request, 'prod_by_subcate.html', context)
+
+# featured_categery
+
+def featured_cate(request, name):
+
+    get_fea_prod = Product.objects.filter(featured_category__name = name)
+    
+   
+    context = {
+        'name'  : name,
+        'get_fea_prod'  : get_fea_prod,
+    }
+    
+    return render(request, 'featured_cate.html', context)
+
+# shop_by_brand
+
+def shop_by_brand(request, name):
+    
+    get_prod_by_brand = Product.objects.filter(brand__name = name)
+    
+    context = {
+        'name' : name,
+        'get_prod_by_brand' : get_prod_by_brand
+    }
+    return render(request, 'shop_by_brand.html', context)
+
+# sitemap_product_detail
+def sitemap_product_detail(request, id):
+    get  = Product.objects.get(id = id)
+    return render(request, 'sitemap_product_detail.html', {'get':get})
+
+
+
+
+
+

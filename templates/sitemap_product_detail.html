@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- css link -->
+    <link href="{% static "output.css" %}" rel="stylesheet" />
+
+
+    <title>product</title>
+</head>
+<body>
+    
+    <section class=" bg-c_primary md:py-4 min-h-[100vh] ">
+        <!-- product details start -->
+
+        <section id="prod_detail" >
+            <div class="container">
+                <div class="flex flex-col md:flex-row justify-center gap-3 ">
+    
+                    <div class="img_gallery rounded ">
+                        <img id="show_img" src="{{get.img.url}}" alt="macbook" class="w-56 h-56 mx-auto mb-2">
+                        <div class="list_img_gallery flex md:gap-2">
+                            {% for prodimg in get.product_images_set.all %}
+                            <img class="list_img w-[6.6rem] h-32 border-2 cursor-pointer rounded hover:border-c_primary transition" src="{{prodimg.image}}" alt="">                            
+                            {% endfor %}
+    
+                        </div>
+                    </div>
+                    
+                    <div class="product_detail_text  py-4 ">
+                        <h1 class="text-center mb-3 font-bold text-xl">{{get.name}}</h1>
+                        <div class="space-y-2">
+                            <div class="discount bg-c_gray px-2 py-1 rounded">
+                                <p>discount price: <del class="mx-5">{{get.discounted_price}}৳</del> <span class="font-bold text-c_primary">{{get.price}} ৳</span></p>
+                            </div>
+                            <div class="status col-span-2 bg-c_gray px-2 py-1 rounded">
+                                <p>Status: <span class="font-bold text-c_primary">{{get.in_stock}} In Stock </span></p>
+                            </div>
+                            <div class="model bg-c_gray px-2 py-1 rounded">
+                                <p>Model: <span class="font-bold text-c_primary">{{get.model}}</span></p>
+                            </div>
+                            <div class="brand bg-c_gray px-2 py-1 rounded">
+                                <p>Brand: <span class="font-bold text-c_primary">{{get.brand}}</span></p>
+                            </div>
+                        </div>
+
+                        <div class="btn_box mt-4 mx-auto flex justify-around items-center">
+                            <a href="#" class="bg-c_secondary text-white py-1 px-2 text-xs  lg:text-sm rounded">Cllick Here To Buy</a>
+                        </div>
+                        <div class="btn_box mt-4 mx-auto flex justify-around items-center">
+                            <a href="{% url "home" %}" class=" bg-c_secondary text-white py-1 px-2 text-xs  lg:text-sm rounded">Visite our shop</a>
+                        </div>
+    
+                        <article class="">
+                            <h1 class="font-semibold my-3">{{get.name}}</h1>
+                            <ul class="px-8 text-white">
+                                    {{get.Product_information | safe}}
+                            </ul>
+                            <ul class="px-8 text-white">
+                                    {{get.Product_information | safe}}
+                            </ul>
+                        </article>
+    
+                    </div>
+    
+                </div>
+            </div>
+        </section>
+    
+    <!-- product details end -->
+
+        <!-- product specifications start -->
+
+        <section id="prod_spe">
+            <div class="container px-3 my-5">
+                <h1 class="text-2xl font-bold bg-c_gray px-4 py-2 ">
+                    Description
+                </h1>
+                <h1 class="text-2xl font-medium my-6">
+                    {{get.name}}
+                </h1>
+                <p >
+                    <a href="#" class="border-b-2 border-c_primary"></a> {{get.Description | safe |striptags }}
+                </p>
+    
+                <article>
+                    <h1 class="font-semibold text-start my-3">MacBook Air M1 Features</h1>
+                    <ul class="px-8">
+                        {{get.Product_information | safe}}
+                    </ul>
+                </article>
+    
+            </div>
+        </section>
+    
+        <!-- product specifications end -->
+
+    </section>
+        
+        <!-- jquery cdn -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script src="{% static "script.js" %}"></script>
+    
+
+</body>
+</html>

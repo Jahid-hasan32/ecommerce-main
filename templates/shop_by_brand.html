@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %} shop by brands {% endblock title %}
+
+
+{% block main %}
+
+
+<section id="feature_cate">
+    <div class="container mt-20">
+        <div class="feature_cate_text">
+            <h1 class="font-bold text-xl my-10 text-center">
+                {{name}}
+            </h1>
+        </div>
+
+        <div class="container">
+            <div class="grid grid-cols-2 ml-2 md:grid-cols-3 lg:grid-cols-4 gap-y-3 ">
+    
+                {% if  get_prod_by_brand %}
+
+                {% for g_p_b_b in get_prod_by_brand %}
+                <div class="card border m-auto hover:shadow-lg rounded-md transition duration-200 py-5 px-8 relative">
+
+                    <div class="absolute -top-0 left-0 border  py-1 px-2 bg-c_primary"><p class="text-xs lg:text-sm text-white">{{g_p_b_b.offer_percent}} OFF</p></div>
+
+                    <div>
+                        <a href="{% url "prod_detail" g_p_b_b.id g_p_b_b.name %}" class="w-[145px] h-[145px] group">
+                            <img src="{{g_p_b_b.img.url}}" alt="" style="width:8rem; height:8rem" />
+                            <small class="group-hover:text-c_primary">{{g_p_b_b.name}}</small>
+                        </a>
+                    </div>
+
+                    <div class="price my-2 ">
+                        <span>price: <small class="text-c_primary font-bold">{{g_p_b_b.price}} </small></span>
+                        
+                        <del><small class="text-c_primary font-bold">{{g_p_b_b.discounted_price}}</small></del>
+                    </div>
+                        <div class=" flex flex-col text-center gap-2">
+                            <a href="{% url "add_to_cart"  g_p_b_b.id g_p_b_b.name %}" class="btn_fill text-white">Order Now</a>
+                            <a href="{% url "add_to_cart"  g_p_b_b.id g_p_b_b.name %}" class="btn_empty">Add to card</a>
+                        </div>
+                </div>
+                {% endfor %}
+                
+                {% else %}
+
+                <div class="bg-c_primary mt-5 px-4 py-4 rounded-lg shadow-lg mx-auto w-full ">
+                    <h4 class="text-white fon-bold">Sorry, there are no products!</h4>
+                </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+{% endblock main %}
+
+
