@@ -5,7 +5,7 @@ from django.http import HttpResponse , HttpResponseRedirect
 from sslcommerz_lib import SSLCOMMERZ
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
-from .models import Delivery_info, OrderItem , Transaction
+from .models import Delivery_info, OrderItem 
 from cart.models import Cart
 
 @login_required

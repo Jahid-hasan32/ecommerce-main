@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from .models import (
-    Category,
+    ProductView,
     Featured_category,
     Brand,
     Product_images,
@@ -27,3 +27,7 @@ class AdminProduct(admin.ModelAdmin):
 @admin.register(Brand)
 class AdminBrand(admin.ModelAdmin):
     list_display = ['id', 'name']
+
+@admin.register(ProductView)
+class AdminProductView(admin.ModelAdmin):
+    list_display = ['id','user','product','timestamp']

@@ -10,9 +10,11 @@ from payment.models import Delivery_info
 
 def profile(request):
     user = request.user
-    delivery_info_instance = Delivery_info.objects.filter(user=user)
+    delivery_info_instances = Delivery_info.objects.filter(user=user)
+
+    delivery_info_list = []
     
-    for i in delivery_info_instance:
+    for i in delivery_info_instances:
         order_id = i.order_id
         trans_id = i.transaction_id
         name = i.full_name
@@ -23,21 +25,30 @@ def profile(request):
         address = i.address
         price = i.price
         product = i.orderd_products
-        
+        status = i.status
+        paid = i.paid
+        pay_system = i.pay_system
+        created_at = i.created_at
 
-    context = {
-        'order_id' : order_id,
-        'trans_id' : trans_id,
-        'name' : name,
-        'phone' : phone,
-        'email' : email,
-        'division' : division,
-        'district' : district,
-        'address' : address, 
-        'price' : price,
-        'product' : product
-    }
-    return render(request, 'account/profile.html', context) 
+        context = {
+            'order_id' : order_id,
+            'trans_id' : trans_id,
+            'name' : name,
+            'phone' : phone,
+            'email' : email,
+            'division' : division,
+            'district' : district,
+            'address' : address, 
+            'price' : price,
+            'product' : product,
+            'status' : status,
+            'paid' : paid,
+            'pay_system' : pay_system,
+            'created_at': created_at,
+        }
+        delivery_info_list.append(context)
+
+    return render(request, 'account/profile.html', {'delivery_info_list': delivery_info_list})
 
 
 # ------> user registration form. 

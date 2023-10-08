@@ -1,5 +1,5 @@
 from django.contrib import admin
-from . models import Delivery_info, OrderItem , Transaction
+from . models import Delivery_info, OrderItem 
 
     
 @admin.register(Delivery_info)
@@ -10,10 +10,6 @@ class AdminDelivery_info(admin.ModelAdmin):
 @admin.register(OrderItem)
 class AdminOrderItem(admin.ModelAdmin):
     list_display = ['user','quanity','price','created_at','products']
-
-@admin.register(Transaction)
-class AdminTransaction(admin.ModelAdmin):
-    list_display = ['id', 'user', 'cus_phone','total_amount','transection_id']
 
 
 # from .services import get_pathao_access_token, create_pathao_shipment

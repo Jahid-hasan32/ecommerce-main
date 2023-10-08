@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render , get_object_or_404
 from . models import Product, Featured_category , Brand
 from category.models import Category, Subcategory
 from django.contrib.sites.shortcuts import get_current_site
@@ -9,6 +9,7 @@ from django.http import HttpResponse
 # Create your views here.
 
 def home(request):
+
     new_arrival = Product.objects.filter(feature_product="new arrival", availabe = True)
     deal_of_day = Product.objects.filter(feature_product="deal of the day", availabe = True)
     best_deal = Product.objects.filter(feature_product="best deal", availabe = True)
@@ -69,8 +70,12 @@ def product_by_cate(request, id, slug):
 def prod_detail(request, id, name):
     get_product = Product.objects.get(id=id, name = name)
     
+    category_prod = get_product.category
+    get_product_by_category =  Product.objects.filter(category = category_prod)
+    
     context = {
-        'get_product' : get_product
+        'get_product' : get_product,
+        'get_product_by_category' : get_product_by_category
     }
     return render(request, 'prod_detail.html', context)
 

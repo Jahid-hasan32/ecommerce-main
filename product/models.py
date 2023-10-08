@@ -3,7 +3,7 @@ import uuid
 from django.urls import reverse
 from ckeditor.fields import RichTextField
 from category.models import Category, Subcategory
-
+from account.models import User
 
 # featured category
 class Featured_category(models.Model):
@@ -71,3 +71,10 @@ class Product_images(models.Model):
         return self.product.name
     
     
+class ProductView(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    timestamp = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-timestamp']  # Order records by timestamp in descending order

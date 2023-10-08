@@ -42,17 +42,4 @@ class Delivery_info(models.Model):
         return self.order_id
     
 
-# transcection info 
-class Transaction(models.Model):
-    user        = models.ForeignKey(User, on_delete=models.CASCADE)
-    cus_name = models.CharField(max_length=200)
-    cus_email  = models.EmailField(max_length=300)
-    cus_phone = models.CharField(max_length=40)
-    cus_address =  models.CharField(max_length=400)
-    total_amount = models.PositiveIntegerField()
-    transection_id = models.CharField(max_length=100, unique=True)
-    num_of_item    = models.PositiveIntegerField()
-    product_name   = models.CharField(max_length=200)
-    product_category = models.CharField(max_length=200)
-        
 

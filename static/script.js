@@ -2,22 +2,26 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // nav links
 
-    let dropdown_links = document.getElementById("dropdown_links")
-    let dropdown = document.getElementById("dropdown")
-
-    dropdown_links.addEventListener("mouseenter", () => {
+    let dropdown_links = document.getElementById("dropdown_links");
+    let dropdown = document.getElementById("dropdown");
+    
+    dropdown_links.addEventListener("click", (event) => {
         dropdown.classList.add("nav_men_hov_active");
-    })
-
-
+        event.stopPropagation(); // Prevent the click event from bubbling up to the body click event
+    });
+    
     document.body.addEventListener("click", function (event) {
-        dropdown.classList.remove("nav_men_hov_active");
+        if (dropdown) {
+            dropdown.classList.remove("nav_men_hov_active");
+        }
     });
-
+    
     document.body.addEventListener("scroll", function (event) {
-        dropdown.classList.remove("nav_men_hov_active");
+        if (dropdown) {
+            dropdown.classList.remove("nav_men_hov_active");
+        }
     });
-
+    
 
     //  tab btn -> feature
     let tab_btn = document.querySelectorAll(".tab_btn");
@@ -104,7 +108,7 @@ $(".plus-quantity").click(function () {
             console.log(data);
             quantity_product.text(data.quantity);
 
-            document.getElementById('totalamount').innerText = data.total_amount;
+            document.getElementById('totalamount').innerText = data.total_amount + '$';
             document.getElementById('amount').innerText = data.amount;
         },
     })
@@ -159,4 +163,5 @@ $(".remove_btn").click(function () {
 
 
 })
+
 

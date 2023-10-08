@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm, UsernameField, PasswordChangeForm, PasswordResetForm, password_validation, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm, UsernameField, PasswordChangeForm, PasswordResetForm, password_validation, AuthenticationForm, SetPasswordForm
 from . models import User
 from django.utils.translation import gettext_lazy as _
 
@@ -57,4 +57,26 @@ class MyPassChange(PasswordChangeForm):
         label=_("New password confirmation"),
         strip=False,
         widget=forms.PasswordInput(attrs={"autocomplete": "new-password","class":"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline "}),
+    )
+
+# Password reset form. 
+class MyPassResetForm(PasswordResetForm):
+    email = forms.EmailField(
+        label=_("Email"),
+        max_length=254,
+        widget=forms.EmailInput(attrs={"autocomplete": "email", "class":"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline "}),
+    )
+
+# set password form
+class MySetPassForm(SetPasswordForm):
+    new_password1 = forms.CharField(
+        label=_("New password"),
+        widget=forms.PasswordInput(attrs={"autocomplete": "new-password", "class":"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline "}),
+        strip=False,
+        help_text=password_validation.password_validators_help_text_html(),
+    )
+    new_password2 = forms.CharField(
+        label=_("New password confirmation"),
+        strip=False,
+        widget=forms.PasswordInput(attrs={"autocomplete": "new-password", "class":"shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline "}),
     )
