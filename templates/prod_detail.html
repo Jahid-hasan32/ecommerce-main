@@ -8,10 +8,10 @@
     <!-- product details start -->
 
         <section id="prod_detail">
-            <div class="container">
-                <div class="flex flex-col md:flex-row justify-center gap-3 md:mt-20 ">
+            <div class="container px-4">
+                <div class="flex flex-col md:flex-row justify-center gap-3 mt-6 md:mt-20 ">
 
-                    <div class="img_gallery rounded">
+                    <div class="img_gallery rounded ">
                         <img id="show_img" src="{{get_product.img.url}}" alt="macbook" class="w-96 h-96">
                         <div class="list_img_gallery flex md:gap-2">
                             {% for prodimg in get_product.product_images_set.all %}
@@ -58,15 +58,15 @@
     <!-- product details end -->
     
     <!-- same category products -->
-    <section id="recently_viewed_products">
-        <div class="container my-10">
-            <div class="recently_viewed_products_text">
+    <section id="same_category_prod">
+        <div class="container my-10 px-4">
+            <div class="same_category_prod_text">
                 <h1 class="font-bold text-xl my-10 text-center capitalize">
                     same categories products
                 </h1>
             </div>
             
-            <div class="recently_viewed_products_card ">
+            <div class="same_category_prod_card ">
                 <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-3 ">
 
                     {% for g_p_b_c in get_product_by_category %}
@@ -103,7 +103,7 @@
     <!-- product specifications start -->
 
     <section id="prod_spe">
-        <div class="container px-3 my-5">
+        <div class="container px-8 my-5">
             <h1 class="text-2xl font-bold bg-c_gray px-4 py-2 ">
                 Description
             </h1>
@@ -115,7 +115,7 @@
             </p>
 
             <article>
-                <h1 class="font-semibold text-start my-3">MacBook Air M1 Features</h1>
+                <h1 class="font-semibold text-start my-3">{{get_product.name}}</h1>
                 <ul class="px-8">
                     {{get_product.Product_information | safe}}
                 </ul>

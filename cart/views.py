@@ -129,6 +129,7 @@ def showCart(request):
         'product_count': total_quantity,
         'amount': amount,
         'total_amount': total_amount,
+        'delivery_charge' : delivery_charge,
     }
     return render(request, 'cart.html', context)
 

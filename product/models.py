@@ -1,5 +1,4 @@
 from django.db import models
-import uuid
 from django.urls import reverse
 from ckeditor.fields import RichTextField
 from category.models import Category, Subcategory
@@ -41,7 +40,6 @@ class Product(models.Model):
     price                 = models.IntegerField()
     discounted_price  = models.FloatField()
     offer_percent    = models.CharField(max_length=20, blank=True,help_text="this can be blank")
-    shiping_fee       = models.IntegerField()
     img                   = models.ImageField(upload_to='project_images/')
     category           = models.ForeignKey(Category, on_delete=models.CASCADE)
     subcategory      = models.ForeignKey(Subcategory, on_delete=models.CASCADE)

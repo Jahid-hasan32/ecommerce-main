@@ -120,13 +120,25 @@ def shop_by_brand(request, name):
     }
     return render(request, 'shop_by_brand.html', context)
 
+# about page
+def about(request):
+    return render(request, 'about.html')
+
+# search option
+def search(request):
+    # get_prod_from_model_by_keyword = Product.objects.filter(name = name)
+    
+    if request.method == "POST":
+        get_prod_from_input_by_keyword = request.POST['search']
+        get_prod_from_model_by_keyword = Product.objects.filter(Q(name__icontains = get_prod_from_input_by_keyword) | Q(Description__icontains = get_prod_from_input_by_keyword))
+    context = {
+        "get_prod_from_model_by_keyword" : get_prod_from_model_by_keyword, 
+    }
+    return render(request, 'search.html', context)
+
 # sitemap_product_detail
 def sitemap_product_detail(request, id):
     get  = Product.objects.get(id = id)
     return render(request, 'sitemap_product_detail.html', {'get':get})
-
-
-
-
 
 

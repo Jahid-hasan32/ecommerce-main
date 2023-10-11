@@ -62,7 +62,6 @@ document.addEventListener('DOMContentLoaded', function () {
     // user profile 
 
     function openTabs(tabsName) {
-        console.log('i am here');
         var i;
         var x = document.getElementsByClassName("step-tab");
         for (i = 0; i < x.length; i++) {
