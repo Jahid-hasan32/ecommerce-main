@@ -21,9 +21,9 @@
                 <div class="flex flex-col md:flex-row justify-center gap-3 ">
     
                     <div class="img_gallery rounded ">
-                        <img id="show_img" src="{{get.img.url}}" alt="macbook" class="w-56 h-56 mx-auto mb-2">
+                        <img id="show_img" src="{{landing.product.img.url}}" alt="macbook" class="w-56 h-56 mx-auto mb-2">
                         <div class="list_img_gallery flex md:gap-2">
-                            {% for prodimg in get.product_images_set.all %}
+                            {% for prodimg in landing.product.images.all %}
                             <img class="list_img w-[6.6rem] h-32 border-2 cursor-pointer rounded hover:border-c_primary transition" src="{{prodimg.image}}" alt="">                            
                             {% endfor %}
     
@@ -31,19 +31,19 @@
                     </div>
                     
                     <div class="product_detail_text  py-4 ">
-                        <h1 class="text-center mb-3 font-bold text-xl">{{get.name}}</h1>
+                        <h1 class="text-center mb-3 font-bold text-xl">{{landing.product.name}}</h1>
                         <div class="space-y-2">
                             <div class="discount bg-c_gray px-2 py-1 rounded">
-                                <p>discount price: <del class="mx-5">{{get.discounted_price}}৳</del> <span class="font-bold text-c_primary">{{get.price}} ৳</span></p>
+                                <p>discount price: <del class="mx-5">{{landing.product.discounted_price}}৳</del> <span class="font-bold text-c_primary">{{get.price}} ৳</span></p>
                             </div>
                             <div class="status col-span-2 bg-c_gray px-2 py-1 rounded">
-                                <p>Status: <span class="font-bold text-c_primary">{{get.in_stock}} In Stock </span></p>
+                                <p>Status: <span class="font-bold text-c_primary">{{landing.product.in_stock}} In Stock </span></p>
                             </div>
                             <div class="model bg-c_gray px-2 py-1 rounded">
-                                <p>Model: <span class="font-bold text-c_primary">{{get.model}}</span></p>
+                                <p>Model: <span class="font-bold text-c_primary">{{landing.product.model}}</span></p>
                             </div>
                             <div class="brand bg-c_gray px-2 py-1 rounded">
-                                <p>Brand: <span class="font-bold text-c_primary">{{get.brand}}</span></p>
+                                <p>Brand: <span class="font-bold text-c_primary">{{landing.product.brand}}</span></p>
                             </div>
                         </div>
 
@@ -55,12 +55,12 @@
                         </div>
     
                         <article class="">
-                            <h1 class="font-semibold my-3">{{get.name}}</h1>
+                            <h1 class="font-semibold my-3">{{landing.product.name}}</h1>
                             <ul class="px-8 text-white">
-                                    {{get.Product_information | safe}}
+                                    {{landing.product.Product_information | safe}}
                             </ul>
                             <ul class="px-8 text-white">
-                                    {{get.Product_information | safe}}
+                                    {{landing.product.Product_information | safe}}
                             </ul>
                         </article>
     
@@ -80,16 +80,16 @@
                     Description
                 </h1>
                 <h1 class="text-2xl font-medium my-6">
-                    {{get.name}}
+                    {{landing.product.name}}
                 </h1>
                 <p >
-                    <a href="#" class="border-b-2 border-c_primary"></a> {{get.Description | safe |striptags }}
+                    <a href="#" class="border-b-2 border-c_primary"></a> {{landing.product.Description | safe |striptags }}
                 </p>
     
                 <article>
                     <h1 class="font-semibold text-start my-3">MacBook Air M1 Features</h1>
                     <ul class="px-8">
-                        {{get.Product_information | safe}}
+                        {{landing.product.Product_information | safe}}
                     </ul>
                 </article>
     
@@ -99,7 +99,8 @@
         <!-- product specifications end -->
 
     </section>
-        
+
+    
         <!-- jquery cdn -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 

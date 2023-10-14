@@ -1,10 +1,11 @@
 from django.shortcuts import render , get_object_or_404
-from . models import Product, Featured_category , Brand
+from . models import Product, Featured_category , Brand , ProductView
 from category.models import Category, Subcategory
 from django.contrib.sites.shortcuts import get_current_site
 from banners. models import Banner
 from django.db.models import Q
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -135,6 +136,13 @@ def search(request):
         "get_prod_from_model_by_keyword" : get_prod_from_model_by_keyword, 
     }
     return render(request, 'search.html', context)
+
+# landing page for each product. 
+@login_required
+def landing_page(request, domain):
+    landing = get_object_or_404(ProductView, domain=domain)
+    return render(request, 'sitemap_product_detail.html', {'landing': landing})
+
 
 # sitemap_product_detail
 def sitemap_product_detail(request, id):

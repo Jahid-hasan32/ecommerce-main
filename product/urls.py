@@ -15,6 +15,7 @@ urlpatterns = [
     path('',views.home, name="home"),
     path('sitemapxml/', sitemap, {'sitemaps': sitemaps}, name='django.contrib.sitemaps.views.sitemap'),
     path('sitemap_product_detail/<str:id>/', views.sitemap_product_detail, name ="sitemap_product_detail"),
+    path('landing/<str:domain>/', views.landing_page, name='landing_page'),
     
     path('cart_section/', views.cart, name="cart"),
     # path('sitemap_product_detail/<str:id>', views.cart, name="cart"),

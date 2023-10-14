@@ -62,7 +62,7 @@ class Product(models.Model):
     
 # product images 
 class Product_images(models.Model):
-    product          = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product          = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
     image             = models.CharField(max_length=300)
     
     def __str__(self):
@@ -70,9 +70,10 @@ class Product_images(models.Model):
     
     
 class ProductView(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    timestamp = models.DateTimeField(auto_now=True)
+    domain = models.CharField(max_length=255, unique=True, default='domain name')
+    created_at = models.DateTimeField(auto_now=True)
+
 
     class Meta:
-        ordering = ['-timestamp']  # Order records by timestamp in descending order
+        ordering = ['-created_at']  # Order records by created_at in descending order
