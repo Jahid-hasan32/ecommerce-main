@@ -2,12 +2,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // nav links
 
-    let dropdown_links = document.getElementById("dropdown_links");
+    let dropdown_link = document.getElementById("dropdown_links");
     let dropdown = document.getElementById("dropdown");
     
-    dropdown_links.addEventListener("click", (event) => {
+    dropdown_link.addEventListener("click", (event) => {
         dropdown.classList.add("nav_men_hov_active");
-        event.stopPropagation(); // Prevent the click event from bubbling up to the body click event
+        event.stopPropagation(); 
     });
     
     document.body.addEventListener("click", function (event) {

@@ -16,7 +16,7 @@
                     <div class="swiper-wrapper">
 
                         {% for m_banner in main_banner %}
-                      <div class="swiper-slide"><a href="#"><img class="h-[380px] w-full" src="{{m_banner.image}}"
+                      <div class="swiper-slide"><a href="{% url "prod_by_banner" m_banner.id m_banner.category %}"><img class="h-[380px] w-full" src="{{m_banner.image}}"
                         alt="" /></a></div>
                         {% endfor %}
 

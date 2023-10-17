@@ -7,8 +7,7 @@ from django.db.models import Q
 from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 
-# Create your views here.
-
+# main view
 def home(request):
 
     new_arrival = Product.objects.filter(feature_product="new arrival", availabe = True)
@@ -20,6 +19,9 @@ def home(request):
     
     products_without_feature = Product.objects.filter(Q(feature_product="") | Q(feature_product__isnull=True), availabe=True)
 
+    for i in products_without_feature:
+        print(type(i.name))
+    
     shop_by_brand = Brand.objects.all()
     
 
@@ -69,8 +71,8 @@ def product_by_cate(request, id, slug):
 
 #product detail 
 def prod_detail(request, id, name):
-    get_product = Product.objects.get(id=id, name = name)
-    
+    get_product = Product.objects.get(id=id, name=name)
+    # print()
     category_prod = get_product.category
     get_product_by_category =  Product.objects.filter(category = category_prod)
     
@@ -121,6 +123,12 @@ def shop_by_brand(request, name):
     }
     return render(request, 'shop_by_brand.html', context)
 
+# banner links activations
+def prod_by_banner(request, id, category):
+    get_prod_by_banner = Banner.objects.get(id = id , category = category)
+    # print(get_prod_by_banner)
+    return HttpResponse(get_prod_by_banner)
+
 # about page
 def about(request):
     return render(request, 'about.html')
@@ -142,7 +150,6 @@ def search(request):
 def landing_page(request, domain):
     landing = get_object_or_404(ProductView, domain=domain)
     return render(request, 'sitemap_product_detail.html', {'landing': landing})
-
 
 # sitemap_product_detail
 def sitemap_product_detail(request, id):
