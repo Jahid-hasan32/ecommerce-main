@@ -6,7 +6,8 @@ from django.utils import timezone
 import uuid
 
 class OrderItem(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    cart_id = models.CharField(max_length=100, null=True ,default='')
     products  = models.ForeignKey(Cart, on_delete=models.CASCADE)
     quanity         = models.PositiveIntegerField()
     price           = models.FloatField(default=0)
@@ -20,9 +21,10 @@ class OrderItem(models.Model):
 
 class Delivery_info(models.Model):
     STATUS = ('Pending', 'Received', 'On The Way', 'Deliverd')
-
+    
+    cart_id = models.CharField(max_length=100, null=True ,default='')
     order_id             = models.CharField(max_length=100, default='')
-    user                   = models.ForeignKey(User, on_delete=models.CASCADE, default='')
+    user                   = models.ForeignKey(User, on_delete=models.CASCADE, default='', null=True, blank=True)
     full_name          = models.CharField(max_length=200)
     email                 = models.EmailField(max_length=300, null=True, blank=True)
     phone_number = models.CharField(max_length=30)

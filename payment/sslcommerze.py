@@ -8,14 +8,23 @@ from django.contrib.auth.decorators import login_required
 from .models import Delivery_info, OrderItem 
 from cart.models import Cart
 
-@login_required
+def _cart_id(request):
+    
+    # If the user is anonymous, use their session key as the cart ID
+    cart_id = request.session.session_key
+    if not cart_id:
+        cart_id = request.session.create()
+    return cart_id
+
+
+# @login_required
 def sslcommerz_payment_gateway(request):
-    if request.user.is_authenticated:
-        user = request.user
+    cartId = _cart_id(request)
+    user = request.user
         
-        order_item_instance   = OrderItem.objects.filter(user=user)
-        for get_prod_info in order_item_instance:            
-            get_user_add_instance = Delivery_info.objects.filter(user=user) # getting the current user address
+    order_item_instance   = OrderItem.objects.filter(cart_id = cartId)
+    for get_prod_info in order_item_instance:                    
+            get_user_add_instance = Delivery_info.objects.filter(cart_id = cartId) # getting the current user address
             for get_user_add in get_user_add_instance:  
                 
                 if request.method == "POST":
@@ -62,14 +71,14 @@ def succes(request):
             url = reverse('payment:sslc_complete', args=(tran_id, val_id, amount, card_type))
             return HttpResponseRedirect(url)
         
-    return render(request, 'payment/payment_success.html')
 
-@login_required
+# @login_required
 def sslc_complete(request, tran_id, val_id, amount, card_type):
     user = request.user
-    
-    all_product_name = OrderItem.objects.filter(user = user)    
-    save_delivery_instance =  Delivery_info.objects.filter( user = user)   
+    cartId = _cart_id(request)
+
+    all_product_name = OrderItem.objects.filter(cart_id = cartId)    
+    save_delivery_instance =  Delivery_info.objects.filter( cart_id = cartId)   
     
     for save_delivery in save_delivery_instance: 
         save_delivery.order_id = val_id
@@ -78,7 +87,10 @@ def sslc_complete(request, tran_id, val_id, amount, card_type):
         save_delivery.pay_system = card_type        
         save_delivery.orderd_products.add(*all_product_name)
         save_delivery.save()
-        
+    
+    # all_product_name.delete()    
+    
+    # return redirect(request, 'payment/payment_success.html')
     return redirect('/')
     
 def fail(request):

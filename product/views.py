@@ -15,16 +15,11 @@ def home(request):
     best_deal = Product.objects.filter(feature_product="best deal", availabe = True)
     best_sellers = Product.objects.filter(feature_product="best sellers", availabe = True)
     new_arrival_gadget = Product.objects.filter(feature_product="new arrival gadget", availabe = True)
-
     
     products_without_feature = Product.objects.filter(Q(feature_product="") | Q(feature_product__isnull=True), availabe=True)
-
-    for i in products_without_feature:
-        print(type(i.name))
     
     shop_by_brand = Brand.objects.all()
     
-
     # banner fatching. 
     main_banner  = Banner.objects.filter(category = 'MAIN')
     side_banner  = Banner.objects.filter(category = 'SIDE')
@@ -72,7 +67,6 @@ def product_by_cate(request, id, slug):
 #product detail 
 def prod_detail(request, id, name):
     get_product = Product.objects.get(id=id, name=name)
-    # print()
     category_prod = get_product.category
     get_product_by_category =  Product.objects.filter(category = category_prod)
     

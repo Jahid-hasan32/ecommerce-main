@@ -14,10 +14,9 @@
                     <div class="img_gallery rounded ">
                         <img id="show_img" src="{{get_product.img.url}}" alt="macbook" class="w-96 h-96">
                         <div class="list_img_gallery flex md:gap-2">
-                            {% for prodimg in get_product.product_images_set.all %}
+                            {% for prodimg in get_product.images.all %}
                             <img class="list_img w-[6.6rem] h-32 border-2 cursor-pointer rounded hover:border-c_primary transition" src="{{prodimg.image}}" alt="">                            
                             {% endfor %}
-
                         </div>
                     </div>
                     

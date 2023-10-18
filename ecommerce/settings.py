@@ -126,6 +126,10 @@ USE_I18N = True
 
 USE_TZ = True
 
+# Default primary key field type
+# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
@@ -143,10 +147,9 @@ LOGIN_REDIRECT_URL = '/account/profile/'
 LOGIN_URL = '/account/login/'
 
 
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+# SESSION_COOKIE_NAME = 'my_cart_session'
+# SESSION_COOKIE_AGE = 3600  # Session duration in seconds
 
 # cutom user model registrations. 
 AUTH_USER_MODEL = "account.User"
