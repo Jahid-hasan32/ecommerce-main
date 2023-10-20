@@ -4,13 +4,13 @@ from . models import Delivery_info, OrderItem
     
 @admin.register(Delivery_info)
 class AdminDelivery_info(admin.ModelAdmin):
-    list_display = ['id','full_name','phone_number','division','district','transaction_id','paid']
-    search_fields = ['full_name','phone_number','division','district']
+    list_display = ['session_id','full_name','phone_number','division','district','transaction_id','paid']
+    search_fields = ['session_id','phone_number','division','district']
 
 @admin.register(OrderItem)
 class AdminOrderItem(admin.ModelAdmin):
-    list_display = ['user','quanity','price','created_at','products']
-
+    list_display = ['session_id','quanity','price','created_at','products']
+    search_fields = ['session_id']
 
 # from .services import get_pathao_access_token, create_pathao_shipment
 

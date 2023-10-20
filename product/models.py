@@ -46,7 +46,7 @@ class Product(models.Model):
     featured_category = models.ForeignKey(Featured_category, on_delete=models.CASCADE, blank=True, null=True, help_text="this can be blank")
     in_stock            = models.IntegerField()
     availabe            = models.BooleanField(default=True)
-    brand                = models.ForeignKey(Brand, on_delete=models.CASCADE, default='', blank=True, null=True)
+    brand                = models.ForeignKey(Brand, on_delete=models.CASCADE, default='No brand')
     model               = models.CharField(max_length=30, default='No model')
     feature_product= models.CharField(max_length=200, choices=FEATURE_CHOICE, blank=True,help_text="this can be blank")
     created_date     = models.DateField(auto_now_add=True,help_text="this can be blank")
@@ -71,8 +71,7 @@ class Product_images(models.Model):
     
 class ProductView(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    domain = models.CharField(max_length=255, unique=True, default='domain name')
-    created_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
 
     class Meta:

@@ -141,13 +141,19 @@ def search(request):
 
 # landing page for each product. 
 @login_required
-def landing_page(request, domain):
-    landing = get_object_or_404(ProductView, domain=domain)
-    return render(request, 'sitemap_product_detail.html', {'landing': landing})
+def landing_page(request, id):
+    landing = get_object_or_404(ProductView, id=id)
+    return render(request, 'landing_page.html', {'landing': landing})
+
+
+# contact defination
+def contact(request):
+    return render(request, 'contact.html')
+
 
 # sitemap_product_detail
-def sitemap_product_detail(request, id):
-    get  = Product.objects.get(id = id)
-    return render(request, 'sitemap_product_detail.html', {'get':get})
+# def sitemap_product_detail(request, id):
+#     get  = Product.objects.get(id = id)
+#     return render(request, 'sitemap_product_detail.html', {'get':get})
 
 

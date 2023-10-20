@@ -13,22 +13,12 @@ class User(AbstractBaseUser, PermissionsMixin):
         unique=True,
     )
     mobile = models.PositiveIntegerField()
-    creation_date   = models.DateField(auto_now=True)
+    creation_date   = models.DateField(auto_now_add=True)
     groups = models.ManyToManyField(Group, blank=True)
     user_permissions = models.ManyToManyField(Permission, blank=True)
-    is_staff = models.BooleanField(
-        _("staff status"),
-        default=False,
-        help_text=_("Designates whether the user can log into this admin site."),
-    )
-    is_active = models.BooleanField(
-        _("active"),
-        default=True,
-        help_text=_(
-            "Designates whether this user should be treated as active. "
-            "Unselect this instead of deleting accounts."
-        ),
-    )
+    is_active = models.BooleanField(default=True)
+    # is_admin = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=False)
 
     objects = UserManager()
 
@@ -41,16 +31,10 @@ class User(AbstractBaseUser, PermissionsMixin):
     # def has_perm(self, perm, obj=None):
     #     "Does the user have a specific permission?"
     #     # Simplest possible answer: Yes, always
-    #     return True
+    #     return self.is_superuser
 
     # def has_module_perms(self, app_label):
     #     "Does the user have permissions to view the app `app_label`?"
     #     # Simplest possible answer: Yes, always
-    #     return True
+    #     return self.is_superuser
 
-    # @property
-    # def is_staff(self):
-    #     "Is the user a member of staff?"
-    #     # Simplest possible answer: All admins are staff
-    #     return self.is_admin
-    

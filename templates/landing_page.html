@@ -20,15 +20,17 @@
             <div class="container">
                 <div class="flex flex-col md:flex-row justify-center gap-3 ">
     
-                    <div class="img_gallery rounded ">
-                        <img id="show_img" src="{{landing.product.img.url}}" alt="macbook" class="w-56 h-56 mx-auto mb-2">
-                        <div class="list_img_gallery flex md:gap-2">
+                    <div class="img_gallery rounded overflow-hidden w-[25rem]">
+                        {% comment %} <img id="show_img" src="{{landing.product.img.url}}" alt="macbook" class="w-56 h-56 mx-auto mb-2"> {% endcomment %}
+                        
+                        <div class="flex justify-between">
                             {% for prodimg in landing.product.images.all %}
-                            <img class="list_img w-[6.6rem] h-32 border-2 cursor-pointer rounded hover:border-c_primary transition" src="{{prodimg.image}}" alt="">                            
+                            <img class="w-56 h-56 mx-auto mb-2" src="{{prodimg.image}}" alt="">                            
                             {% endfor %}
-    
                         </div>
+                        
                     </div>
+
                     
                     <div class="product_detail_text  py-4 ">
                         <h1 class="text-center mb-3 font-bold text-xl">{{landing.product.name}}</h1>
@@ -48,10 +50,10 @@
                         </div>
 
                         <div class="btn_box mt-4 mx-auto flex justify-around items-center">
-                            <a href="#" class="bg-c_secondary text-white py-1 px-2 text-xs  lg:text-sm rounded">Cllick Here To Buy</a>
+                            <a href="{% url "add_to_cart"  landing.product.id landing.product.name %}" class="bg-white text-black py-1 px-2 text-xs lg:text-sm rounded">Cllick Here To Buy</a>
                         </div>
                         <div class="btn_box mt-4 mx-auto flex justify-around items-center">
-                            <a href="{% url "home" %}" class=" bg-c_secondary text-white py-1 px-2 text-xs  lg:text-sm rounded">Visite our shop</a>
+                            <a href="{% url "home" %}" class="bg-white text-black py-1 px-2 text-xs  lg:text-sm rounded">Visite our shop</a>
                         </div>
     
                         <article class="">

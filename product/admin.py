@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.contrib.sites.shortcuts import get_current_site
+from django.utils.html import format_html
 
 from .models import (
     ProductView,
@@ -36,15 +38,35 @@ def generate_landing_content(product):
 
 @admin.register(ProductView)
 class AdminProductView(admin.ModelAdmin):
-    list_display = ['id','product', 'domain','created_at']
-    list_filter = ('product',)
-    search_fields = ('product__name', 'domain')
+    list_display = ['id','product', 'current_site_url','created_at']
+    # list_filter = ('product',)
+    # search_fields = ('product__name', 'domain')
     
-    def generate_landing_page(self, request, queryset):
-        for landing in queryset:
-            # Generate landing page for each product and set the domain
-            # You can use a library like BeautifulSoup or a template engine to create HTML content.
-            landing.content = generate_landing_content(landing.product)
-            landing.save()
+    def current_site_url(self, obj):
+        # Get the current site dynamically
+        current_site = get_current_site(self.request)
 
-    actions = [generate_landing_page]
+        # Determine the scheme (HTTP or HTTPS) based on the request
+        scheme = 'https' if self.request.is_secure() else 'http'
+
+        # Construct the full site URL using the scheme and current site's domain
+        # site_url = f'{scheme}://{current_site}/seconde/'
+        site_url = f'{scheme}://{current_site.domain}/landing/{obj.id}'
+
+        # Make the URL clickable with an anchor tag
+        return format_html('<a href="{}" target="_blank">{}</a>', site_url, site_url)
+
+    current_site_url.short_description = 'Site URL'
+    
+
+    def current_site_domain(self, obj):
+        # Get the current site dynamically
+        current_site = get_current_site(self.request)
+        return current_site.domain
+
+    current_site_domain.short_description = 'Site Domain'
+
+    def get_list_display(self, request):
+        self.request = request
+        return super().get_list_display(request)
+    

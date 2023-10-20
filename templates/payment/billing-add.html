@@ -34,12 +34,21 @@
                         <span class="font-bold">Total Price: </span> <small id="totalamount" >{{total_price}} ৳</small>
                     </div>
 
-                    {% if user_add_check %}
+                    <!-- {% if user_add_check %}
                     <div class="div border mt-4">
                       <form action="{% url "payment:sslcommerz_payment_gateway" %}" method="POST">
                         {% csrf_token %}
-                        <button class="bg-c_primary uppercase py-1 mb-3 block text-center text-white ">Pay with SSlCommerze</>
+                        <button class="bg-c_primary uppercase py-1 mb-3 block text-center text-white ">Pay with SSlCommerze</button>
                       </form>
+                    </div>
+                    {% else %}
+                    <p class="text-red-700 mt-3 text-center ">Please Fill the form to continue</p>
+                    {% endif %} --> 
+                    
+                    {% if user_add_check %}
+                    <div class="div border mt-4">
+                      <a href="{% url "payment:make_payment" %}" class="bg-c_primary uppercase py-1 mb-3 block text-center text-white ">Make Payment</a>
+
                     </div>
                     {% else %}
                     <p class="text-red-700 mt-3 text-center ">Please Fill the form to continue</p>

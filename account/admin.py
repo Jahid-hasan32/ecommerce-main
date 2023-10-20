@@ -11,14 +11,7 @@ class UserAdmin(BaseUserAdmin):
             'fields': ('username', 'email', 'mobile','password1', 'password2'),
         }),
     )
-    
-    # add_fieldsets = (
-    #     (None, {
-    #         'classes': ('wide',),
-    #         'fields': ('username', 'email', 'mobile', 'password1', 'password2', 'groups', 'user_permissions', 'is_staff', 'is_superuser', 'is_active'),
-    #     }),
-    # )
-    
+        
     fieldsets = (
         ("User Credentials", {"fields": ("email", "password")}),
         ("Personal info", {"fields": ("username", "mobile")}),
@@ -27,9 +20,11 @@ class UserAdmin(BaseUserAdmin):
     
     ordering = ('username',)
     
-    list_filter = ('is_superuser', 'is_staff', 'is_active', 'groups')
+    list_filter = ('is_superuser', 'is_active', 'groups')
     list_display = ["email", "username", "is_superuser", "is_staff"]
-
+    search_fields = ["email"]
+    ordering = ["email"]
+    
     def get_user_permissions(self, obj):
         return ', '.join([str(perm) for perm in obj.user_permissions.all()])
     get_user_permissions.short_description = 'User Permissions'

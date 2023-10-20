@@ -89,11 +89,11 @@
                 <a href="{% url "showCart" %}"><i class="fa fa-cart-plus fa-2x text_hover"> </i></a>
 
                 <div>
-                    {% if request.user.is_authenticated %}
-                    <a href="{% url 'userRegiForm' %}" class="text_hover"> <i class="fa fa-user fa-2x"></i> <span>{{ request.user.email }}</span> </a>
-                    {% else %}
+                    {% comment %} {% if request.user.is_authenticated %} {% endcomment %}
+                    {% comment %} <a href="{% url 'userRegiForm' %}" class="text_hover"> <i class="fa fa-user fa-2x"></i> <span>{{ request.user.email }}</span> </a> {% endcomment %}
+                    {% comment %} {% else %} {% endcomment %}
                     <a href="{% url 'userRegiForm' %}" class="text_hover"> <i class="fa fa-user fa-2x"></i> <span>Login / Register</span> </a>
-                    {% endif %}
+                    {% comment %} {% endif %} {% endcomment %}
                 </div>
 
             </div>
@@ -211,7 +211,7 @@
                     <ul>
                         <li><a class="hover:text-c_primary transition" href="#">Home</a></li>
                         <li><a class="hover:text-c_primary transition" href="{% url "about" %}">About</a></li>
-                        <li><a class="hover:text-c_primary transition" href="#">Contact</a></li>
+                        <li><a class="hover:text-c_primary transition" href="{% url "contact" %}">Contact</a></li>
                         <li><a class="hover:text-c_primary transition" href="#">Testimonial</a></li>
 
                     </ul>

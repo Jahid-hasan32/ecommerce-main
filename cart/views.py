@@ -9,7 +9,6 @@ from django.contrib.auth.decorators import login_required
 
   
 def _cart_id(request):
-    
     # If the user is anonymous, use their session key as the cart ID
     cart_id = request.session.session_key
     if not cart_id:
@@ -17,14 +16,24 @@ def _cart_id(request):
     return cart_id
 
 def add_to_cart(request, id, name):
-    # user = request.user if request.user.is_authenticated else None
+    user = request.user if request.user.is_authenticated else None
     cart_id = _cart_id(request)
-
+    print('-----------------------')
+    print(cart_id)
+    print('-----------------------')
+    
     get_product = get_object_or_404(Product, id=id, name=name)
-    cart_item, created = Cart.objects.get_or_create(
-        product=get_product,
-        cart_id=cart_id  # Use the cart_id function to get the cart identifier
-    )
+    if request.user.is_authenticated:
+        cart_item, created = Cart.objects.get_or_create(
+            product=get_product,
+            user = user,
+            session_id=cart_id  # Use the cart_id function to get the cart identifier
+        )
+    else:        
+        cart_item, created = Cart.objects.get_or_create(
+            product=get_product,
+            session_id=cart_id  # Use the cart_id function to get the cart identifier
+        )
 
     if not created:
         cart_item.quantity += 1
@@ -39,7 +48,11 @@ def showCart(request):
     cart_id = _cart_id(request)
 
     product_count = []
-    fetch_product_from_cart = Cart.objects.filter(cart_id=cart_id)
+    if request.user.is_authenticated:
+        fetch_product_from_cart = Cart.objects.filter(session_id=cart_id, user = user)
+    else:
+        fetch_product_from_cart = Cart.objects.filter(session_id=cart_id)
+    
 
     if fetch_product_from_cart:
         for cart_item in fetch_product_from_cart:
@@ -50,7 +63,7 @@ def showCart(request):
     amount = 0
     delivery_charge = 100
     total_amount = 0
-    prod_from_cart = [p for p in Cart.objects.filter(cart_id=cart_id, user=user)]
+    prod_from_cart = [p for p in Cart.objects.filter(session_id=cart_id, user=user)]
 
     if prod_from_cart:
         for product in prod_from_cart:
@@ -76,14 +89,14 @@ def pluscart(request):
         prod_id = request.GET.get('prod_id')
         
         if user.is_authenticated:
-            cart_product = get_object_or_404(Cart, product=prod_id, user=user, cart_id=_cart_id(request))
+            cart_product = get_object_or_404(Cart, product=prod_id, user=user, session_id=_cart_id(request))
         else:
-            cart_product = get_object_or_404(Cart, product=prod_id, cart_id=_cart_id(request))
+            cart_product = get_object_or_404(Cart, product=prod_id, session_id=_cart_id(request))
         
         cart_product.quantity += 1
         cart_product.save()
         
-        prod_from_cart = Cart.objects.filter(user=user) if user.is_authenticated else Cart.objects.filter(cart_id=_cart_id(request))
+        prod_from_cart = Cart.objects.filter(user=user, session_id=_cart_id(request)) if user.is_authenticated else Cart.objects.filter(session_id=_cart_id(request))
         
         amount = sum(product.quantity * product.product.price for product in prod_from_cart)
         
@@ -105,16 +118,17 @@ def minuscart(request):
         prod_id = request.GET.get('prod_id')
         
         if user.is_authenticated:
-            cart_product = get_object_or_404(Cart, product=prod_id, user=user)
+            cart_product = get_object_or_404(Cart, product=prod_id, user=user, session_id=_cart_id(request))
         else:
-            cart_product = get_object_or_404(Cart, product=prod_id, cart_id=_cart_id(request))
+            cart_product = get_object_or_404(Cart, product=prod_id, session_id=_cart_id(request))
         
-        cart_product.quantity -= 1
+        cart_product.quantity += 1
         cart_product.save()
         
-        prod_from_cart = Cart.objects.filter(user=user) if user.is_authenticated else Cart.objects.filter(cart_id=_cart_id(request))
+        prod_from_cart = Cart.objects.filter(user=user, session_id=_cart_id(request)) if user.is_authenticated else Cart.objects.filter(session_id=_cart_id(request))
         
         amount = sum(product.quantity * product.product.price for product in prod_from_cart)
+        
         delivery_charge = 100
         total_amount = amount + delivery_charge
     
@@ -136,13 +150,14 @@ def remove_cart(request):
         if user.is_authenticated:
             cart_product_id = get_object_or_404(Cart, product=prod_id, user=user)
         else:
-            cart_product_id = get_object_or_404(Cart, product=prod_id, cart_id=_cart_id(request))
+            cart_product_id = get_object_or_404(Cart, product=prod_id, session_id=_cart_id(request))
         
         cart_product_id.delete()
         
-        prod_from_cart = Cart.objects.filter(user=user) if user.is_authenticated else Cart.objects.filter(cart_id=_cart_id(request))
+        prod_from_cart = Cart.objects.filter(user=user, session_id=_cart_id(request)) if user.is_authenticated else Cart.objects.filter(session_id=_cart_id(request))
         
         amount = sum(product.quantity * product.product.price for product in prod_from_cart)
+        
         delivery_charge = 100
         total_amount = amount + delivery_charge
     

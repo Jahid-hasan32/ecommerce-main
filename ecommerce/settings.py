@@ -35,8 +35,8 @@ INSTALLED_APPS = [
     'banners',
     'ckeditor',
     'ckeditor_uploader',
-    "django.contrib.sites",  # new
-    "django.contrib.sitemaps",  # new 
+    # "django.contrib.sites",  # new
+    # "django.contrib.sitemaps",  # new 
 ]
 
 SITE_ID = 1  # new
