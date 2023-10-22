@@ -13,9 +13,10 @@
             </div>
             <div class="bkash">
                 <h1 class="btn_fill text-center">Bkash Personal</h1>
+                <h2 class="bg-c_gray text-center">018823576776</h2>
                 <form action="{% url "payment:feed_payment" 'Bkash' %}" method="POST" class="mt-2 block">
                     {% csrf_token %} 
-                    <input type="text" name="transaction" placeholder="type your transaction number" class="px-4 py-2">
+                    <input type="text" name="transaction" required placeholder="type your transaction number" class="px-4 py-2">
                     <button class="btn_empty">submit</button>
                 </form>
             </div>

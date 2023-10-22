@@ -15,8 +15,8 @@
                 <div class="swiper mySwiper">
                     <div class="swiper-wrapper">
 
-                        {% for m_banner in main_banner %}
-                      <div class="swiper-slide"><a href="{% url "prod_by_banner" m_banner.id m_banner.category %}"><img class="h-[380px] w-full" src="{{m_banner.image}}"
+                        {% for m_banner in main_banners %}
+                      <div class="swiper-slide"><a href="{% url "prod_detail" m_banner.product.id m_banner.product.name %}"><img class="h-[380px] w-full" src="{{m_banner.image}}"
                         alt="" /></a></div>
                         {% endfor %}
 
@@ -31,8 +31,8 @@
             </swiper-container>
 
             <div class="banner_right_side w-1/3">
-                {% for side_banner in side_banner %}
-                <a href="#"><img src="{{side_banner.image}}" alt="side_banner" /></a>
+                {% for side_banner in side_banners %}
+                <a href="{% url "prod_detail" side_banner.product.id side_banner.product.name %}"><img src="{{side_banner.image}}" alt="side_banner" /></a>
                 {% endfor %}
             </div>
         </div>
@@ -276,8 +276,8 @@
     <section id="banner">
         <div class="container">
             <div class="flex gap-x-4 flex-col md:flex-row">
-                {% for banner in add_banner %}
-                <div><a href="#"><img class="w-full h-full" src="{{banner.image}}" alt=""></a></div>
+                {% for banner in add_banners %}
+                <div><a href="{% url "prod_detail" banner.product.id banner.product.name %}"><img class="w-full h-full" src="{{banner.image}}" alt=""></a></div>
                 {% endfor %}
             </div>
         </div>

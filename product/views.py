@@ -21,9 +21,9 @@ def home(request):
     shop_by_brand = Brand.objects.all()
     
     # banner fatching. 
-    main_banner  = Banner.objects.filter(category = 'MAIN')
-    side_banner  = Banner.objects.filter(category = 'SIDE')
-    add_banner  = Banner.objects.filter(category = 'ADD')
+    main_banners  = Banner.objects.filter(category = 'MAIN')
+    side_banners  = Banner.objects.filter(category = 'SIDE')
+    add_banners  = Banner.objects.filter(category = 'ADD')
         
     featured_category = Featured_category.objects.all()
     
@@ -35,9 +35,9 @@ def home(request):
         'best_sellers' : best_sellers, 
         'new_arrival_gadget' : new_arrival_gadget, 
         'featured_category' : featured_category,
-        'main_banner' : main_banner,
-        'side_banner' : side_banner,
-        'add_banner' : add_banner, 
+        'main_banners' : main_banners,
+        'side_banners' : side_banners,
+        'add_banners' : add_banners, 
         'shop_by_brand'  : shop_by_brand
     }
 
@@ -117,11 +117,6 @@ def shop_by_brand(request, name):
     }
     return render(request, 'shop_by_brand.html', context)
 
-# banner links activations
-def prod_by_banner(request, id, category):
-    get_prod_by_banner = Banner.objects.get(id = id , category = category)
-    # print(get_prod_by_banner)
-    return HttpResponse(get_prod_by_banner)
 
 # about page
 def about(request):

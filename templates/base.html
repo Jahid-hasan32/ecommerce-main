@@ -61,7 +61,7 @@
     <!-- seconde top Header  starts -->
 
     <header>
-        <div class="container ml-2 flex flex-col md:flex-row md:justify-evenly md:items-center lg:mt-4">
+        <div class="container ml-2 flex flex-col md:flex-row md:justify-between md:items-center lg:mt-4">
 
             <div class="first_t_hea_right flex justify-between items-center border ">
 
@@ -89,13 +89,12 @@
                 <a href="{% url "showCart" %}"><i class="fa fa-cart-plus fa-2x text_hover"> </i></a>
 
                 <div>
-                    {% comment %} {% if request.user.is_authenticated %} {% endcomment %}
-                    {% comment %} <a href="{% url 'userRegiForm' %}" class="text_hover"> <i class="fa fa-user fa-2x"></i> <span>{{ request.user.email }}</span> </a> {% endcomment %}
-                    {% comment %} {% else %} {% endcomment %}
+                    {% if request.user.is_authenticated %}
+                    <a href="{% url 'userRegiForm' %}" class="text_hover"> <i class="fa fa-user fa-2x"></i> <span>{{ request.user.email }}</span> </a>
+                    {% else %}
                     <a href="{% url 'userRegiForm' %}" class="text_hover"> <i class="fa fa-user fa-2x"></i> <span>Login / Register</span> </a>
-                    {% comment %} {% endif %} {% endcomment %}
+                    {% endif %}
                 </div>
-
             </div>
 
         </div>
@@ -200,8 +199,8 @@
 
                     <ul>
                         <li><a class="hover:text-c_primary transition" href="#">Home</a></li>
-                        <li><a class="hover:text-c_primary transition" href="#">About</a></li>
-                        <li><a class="hover:text-c_primary transition" href="#">Contact</a></li>
+                        <li><a class="hover:text-c_primary transition" href="{% url "about" %}">About</a></li>
+                        <li><a class="hover:text-c_primary transition" href="{% url "contact" %}">Contact</a></li>
                     </ul>
                 </div>
 
@@ -209,11 +208,9 @@
                     <h1 class="text-c_primary font-semibold mb-5">Stay Connected</h1>
 
                     <ul>
-                        <li><a class="hover:text-c_primary transition" href="#">Home</a></li>
-                        <li><a class="hover:text-c_primary transition" href="{% url "about" %}">About</a></li>
-                        <li><a class="hover:text-c_primary transition" href="{% url "contact" %}">Contact</a></li>
-                        <li><a class="hover:text-c_primary transition" href="#">Testimonial</a></li>
-
+                        <li><a class="hover:text-c_primary transition" href="#">Facebook</a></li>
+                        <li><a class="hover:text-c_primary transition" href="#">Twitter</a></li>
+                        <li><a class="hover:text-c_primary transition" href="#">instagram</a></li>
                     </ul>
                 </div>
 
@@ -222,9 +219,8 @@
 
                     <ul>
                         <li><a class="hover:text-c_primary transition" href="#">business@gmail.com</a></li>
-                        <li><a class="hover:text-c_primary transition" href="#">Facebook</a></li>
-                        <li><a class="hover:text-c_primary transition" href="#">Twitter</a></li>
-                        <li><a class="hover:text-c_primary transition" href="#">instagram</a></li>
+                        <li><a class="hover:text-c_primary transition" href="{% url "contact" %}">Contact</a></li>
+
 
                     </ul>
                 </div>
