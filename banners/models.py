@@ -10,7 +10,8 @@ class Banner(models.Model):
     )
     product     = models.ForeignKey(Product, on_delete=models.CASCADE)
     category = models.CharField(max_length=30, choices=CHOICE_BANNER)
-    image       = models.CharField(max_length=350)
+    image                   = models.ImageField(upload_to='project_images/')
+
     
     def __str__(self):
         return f"{self.category} -- {self.product.name}"

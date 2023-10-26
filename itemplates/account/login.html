@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block main %}
+
+<section id="login" class="mt-32 py3">
+<div class="container shadow mb-5 py-4">
+<div class="w-2/3 mx-auto">
+    <form action="" method="POST" novalidate class="shadow p-5">
+
+        {% csrf_token %}
+    
+          {% if form.non_field_errors %}
+          {% for error in form.non_field_errors %}
+          <p class="alert alert-danger my-3">{{error}}</p>
+          {% endfor %}
+          {% endif %}
+    
+          {% for fm in form %}
+          {{fm.label_tag}} {{fm}} <small class="text-red-500">{{fm.errors | linebreaksbr}}</small> <br>
+          {% endfor %}
+    
+        {% comment %} <small><a href="{% url 'password_reset' %}">Forgot Password ?</a></small> <br> {% endcomment %}
+        <button class="bg-c_primary py-1 px-3 text-sm mt-4 text-white lg:text-sm rounded ">Submit</button>
+        <br>
+        <div class="text-center text-primary fw-bold"><small>New to BDshop ? <a href="{% url 'userRegiForm' %}"
+           class="text-c_primary">Create an Account</a> </small>
+          
+           <br>
+
+           <small class="text-c_primary border-b"><a href="{% url "password_reset" %}">I forgot my pass</a></small>
+
+          </div>
+
+    </form>
+</div>
+</div>
+</section>
+
+{% endblock main %}

@@ -20,6 +20,7 @@ urlpatterns = [
     
     path('cart_section/', views.cart, name="cart"),
     path('produt-detail/<int:id>/ <str:name>/', views.prod_detail, name = "prod_detail"),
+    path('all_product/', views.all_product, name="all_product"),
     path('products_by/category/<str:id>/<slug:slug>/', views.product_by_cate, name='product_by_cate'),
     path('prod_by_subcate/<int:id>/<str:name>/', views.prod_by_subcate, name="prod_by_subcate"),
     path('featured-product/<str:name>/', views.featured_cate, name="featured_cate"),
@@ -27,6 +28,7 @@ urlpatterns = [
     path('about-us/', views.about, name="about"),
     path('search/', views.search, name="search"),
     path('contact/', views.contact, name="contact"), 
+    path('terms_condition/', views.terms_condition, name="terms_condition"),
 ] 
 
 if settings.DEBUG:

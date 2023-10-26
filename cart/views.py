@@ -9,11 +9,16 @@ from django.contrib.auth.decorators import login_required
 
   
 def _cart_id(request):
-    # If the user is anonymous, use their session key as the cart ID
+    # Get the session key if it exists
     cart_id = request.session.session_key
+    
+    # If the session key is not set, create a new session
     if not cart_id:
-        cart_id = request.session.create()
+        request.session.save()  # Create and save a new session
+        cart_id = request.session.session_key
+    
     return cart_id
+
 
 def add_to_cart(request, id, name):
     user = request.user if request.user.is_authenticated else None
@@ -61,7 +66,7 @@ def showCart(request):
     total_quantity = sum(product_count)
 
     amount = 0
-    delivery_charge = 100
+    delivery_charge = 120
     total_amount = 0
     prod_from_cart = [p for p in Cart.objects.filter(session_id=cart_id, user=user)]
 
@@ -93,14 +98,15 @@ def pluscart(request):
         else:
             cart_product = get_object_or_404(Cart, product=prod_id, session_id=_cart_id(request))
         
-        cart_product.quantity += 1
+        cart_product.quantity += 1 # product increasing for authenticuser and anonymous
         cart_product.save()
         
+        # product price calculation
         prod_from_cart = Cart.objects.filter(user=user, session_id=_cart_id(request)) if user.is_authenticated else Cart.objects.filter(session_id=_cart_id(request))
-        
         amount = sum(product.quantity * product.product.price for product in prod_from_cart)
         
-        delivery_charge = 100
+        
+        delivery_charge = 120
         total_amount = amount + delivery_charge
     
         data = {
@@ -122,14 +128,15 @@ def minuscart(request):
         else:
             cart_product = get_object_or_404(Cart, product=prod_id, session_id=_cart_id(request))
         
-        cart_product.quantity += 1
+        cart_product.quantity -= 1 # product decrement for authenticuser and anonymous
         cart_product.save()
         
+        # product price calculation
         prod_from_cart = Cart.objects.filter(user=user, session_id=_cart_id(request)) if user.is_authenticated else Cart.objects.filter(session_id=_cart_id(request))
-        
         amount = sum(product.quantity * product.product.price for product in prod_from_cart)
         
-        delivery_charge = 100
+        
+        delivery_charge = 120
         total_amount = amount + delivery_charge
     
         data = {
@@ -148,22 +155,23 @@ def remove_cart(request):
         
         
         if user.is_authenticated:
-            cart_product_id = get_object_or_404(Cart, product=prod_id, user=user)
+            cart_product = get_object_or_404(Cart, product=prod_id, user=user, session_id=_cart_id(request))
         else:
-            cart_product_id = get_object_or_404(Cart, product=prod_id, session_id=_cart_id(request))
+            cart_product = get_object_or_404(Cart, product=prod_id, session_id=_cart_id(request))
         
-        cart_product_id.delete()
+        cart_product.delete()  # product decrement for authenticuser and anonymous
         
+        # product price calculation
         prod_from_cart = Cart.objects.filter(user=user, session_id=_cart_id(request)) if user.is_authenticated else Cart.objects.filter(session_id=_cart_id(request))
-        
         amount = sum(product.quantity * product.product.price for product in prod_from_cart)
         
-        delivery_charge = 100
+        
+        delivery_charge = 120
         total_amount = amount + delivery_charge
     
         data = {
             'total_amount' : total_amount, 
-            'quantity' : cart_product_id.quantity,
+            'quantity' : cart_product.quantity,
             'amount' : amount,   
         }
         return JsonResponse(data)

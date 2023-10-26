@@ -1,6 +1,7 @@
 from django.db import models
 from django.urls import reverse
 from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
 from category.models import Category, Subcategory
 from account.models import User
 
@@ -46,12 +47,12 @@ class Product(models.Model):
     featured_category = models.ForeignKey(Featured_category, on_delete=models.CASCADE, blank=True, null=True, help_text="this can be blank")
     in_stock            = models.IntegerField()
     availabe            = models.BooleanField(default=True)
-    brand                = models.ForeignKey(Brand, on_delete=models.CASCADE, default='No brand')
+    brand                = models.ForeignKey(Brand, on_delete=models.CASCADE, default='No brand', null=True, blank=True)
     model               = models.CharField(max_length=30, default='No model')
     feature_product= models.CharField(max_length=200, choices=FEATURE_CHOICE, blank=True,help_text="this can be blank")
     created_date     = models.DateField(auto_now_add=True,help_text="this can be blank")
     Product_information = RichTextField()
-    Description        = RichTextField()
+    Description        = RichTextUploadingField()
     
     def __str__(self):
         return self.name
@@ -63,7 +64,7 @@ class Product(models.Model):
 # product images 
 class Product_images(models.Model):
     product          = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
-    image             = models.CharField(max_length=300)
+    image                   = models.ImageField(upload_to='project_images/')
     
     def __str__(self):
         return self.product.name

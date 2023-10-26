@@ -15,7 +15,7 @@
                         <img id="show_img" src="{{get_product.img.url}}" alt="macbook" class="w-96 h-96">
                         <div class="list_img_gallery flex md:gap-2">
                             {% for prodimg in get_product.images.all %}
-                            <img class="list_img w-[6.6rem] h-32 border-2 cursor-pointer rounded hover:border-c_primary transition" src="{{prodimg.image}}" alt="">                            
+                            <img class="list_img w-[6.6rem] h-32 border-2 cursor-pointer rounded hover:border-c_primary transition" src="{{prodimg.image.url}}" alt="">                            
                             {% endfor %}
                         </div>
                     </div>
@@ -56,49 +56,6 @@
 
     <!-- product details end -->
     
-    <!-- same category products -->
-    <section id="same_category_prod">
-        <div class="container my-10 px-4">
-            <div class="same_category_prod_text">
-                <h1 class="font-bold text-xl my-10 text-center capitalize">
-                    same categories products
-                </h1>
-            </div>
-            
-            <div class="same_category_prod_card ">
-                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-3 ">
-
-                    {% for g_p_b_c in get_product_by_category %}
-                    <div class="card border m-auto hover:shadow-lg rounded-md transition duration-200 py-5 px-8 relative">
-
-                        <div class="absolute -top-0 left-0 border  py-1 px-2 bg-c_primary"><p class="text-xs text-white lg:text-sm">{{g_p_b_c.offer_percent}} OFF</p></div>
-
-                        <div>
-                            <a href="{% url "prod_detail" g_p_b_c.id g_p_b_c.name %}" class="w-[145px] h-[145px] group">
-                                <img src="{{g_p_b_c.img.url}}" alt="" class="" />
-
-                                <small class="group-hover:text-c_primary">{{g_p_b_c.name}}</small>
-                            </a>
-                        </div>
-
-                        <div class="price my-2">
-                            <small class="text- font-bold">{{g_p_b_c.price}} ৳ </small>
-                            <del><small class="text-c_primary font-bold">{{g_p_b_c.discounted_price}}</small></del>
-                        </div>
-                        <div class=" flex flex-col text-center gap-2">
-                            <a href="{% url "add_to_cart"  g_p_b_c.id g_p_b_c.name %}" class="btn_fill text-white">Order Now</a>
-                            <a href="{% url "add_to_cart"  g_p_b_c.id g_p_b_c.name %}" class="btn_empty">Add to card</a>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-
-            </div>
-
-        </div>
-    </section>
-    <!-- related product starts-->
-
     <!-- product specifications start -->
 
     <section id="prod_spe">
@@ -110,7 +67,7 @@
                 {{get_product.name}}
             </h1>
             <p >
-                <a href="#" class="border-b-2 border-c_primary"></a> {{get_product.Description | safe |striptags }}
+                <a href="#" class="border-b-2 border-c_primary"></a> {{get_product.Description | safe }}
             </p>
 
             <article>
@@ -124,5 +81,49 @@
     </section>
 
     <!-- product specifications end -->
+
+
+        <!-- same category products -->
+        <section id="same_category_prod">
+            <div class="container my-10 px-4">
+                <div class="same_category_prod_text">
+                    <h1 class="font-bold text-xl my-10 text-center capitalize">
+                        same categories products
+                    </h1>
+                </div>
+                
+                <div class="same_category_prod_card ">
+                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-y-3 ">
+    
+                        {% for g_p_b_c in get_product_by_category %}
+                        <div class="card border m-auto hover:shadow-lg rounded-md transition duration-200 py-5 px-8 relative">
+    
+                            <div class="absolute -top-0 left-0 border  py-1 px-2 bg-c_primary"><p class="text-xs text-white lg:text-sm">{{g_p_b_c.offer_percent}} OFF</p></div>
+    
+                            <div>
+                                <a href="{% url "prod_detail" g_p_b_c.id g_p_b_c.name %}" class="w-[145px] h-[145px] group">
+                                    <img src="{{g_p_b_c.img.url}}" alt="" class="" />
+    
+                                    <small class="group-hover:text-c_primary">{{g_p_b_c.name}}</small>
+                                </a>
+                            </div>
+    
+                            <div class="price my-2">
+                                <small class="text- font-bold">{{g_p_b_c.price}} ৳ </small>
+                                <del><small class="text-c_primary font-bold">{{g_p_b_c.discounted_price}}</small></del>
+                            </div>
+                            <div class=" flex flex-col text-center gap-2">
+                                <a href="{% url "add_to_cart"  g_p_b_c.id g_p_b_c.name %}" class="btn_fill text-white">Order Now</a>
+                                <a href="{% url "add_to_cart"  g_p_b_c.id g_p_b_c.name %}" class="btn_empty">Add to card</a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+    
+                </div>
+    
+            </div>
+        </section>
+        <!-- same category ends-->
 
 {% endblock main %}

@@ -9,13 +9,15 @@ from django.views.decorators.csrf import csrf_exempt
 from . sslcommerze import sslcommerz_payment_gateway
 
 def _cart_id(request):
-    
-    # If the user is anonymous, use their session key as the cart ID
+    # Get the session key if it exists
     cart_id = request.session.session_key
+    
+    # If the session key is not set, create a new session
     if not cart_id:
-        cart_id = request.session.create()
+        request.session.save()  # Create and save a new session
+        cart_id = request.session.session_key
+    
     return cart_id
-
 
 # @login_required
 def order_save(request):
@@ -51,43 +53,38 @@ def payment_address(request):
 
     cart_item = Cart.objects.filter(session_id=cartId)
 
-    total_price = 0
+    subtotal = 0
     product_count = 0
     
     for cart in cart_item:
         product_count += cart.quantity
-        total_price += cart.quantity * cart.product.price
+        subtotal += cart.quantity * cart.product.price
         
     if request.method == 'POST':
-        form = CustomerAddressForm(request.POST)
-        if form.is_valid():
-            # Create an instance of your model and populate it with form data
-            delivery_info, created = Delivery_info.objects.get_or_create(
-                total_price=total_price,
-                quantity=product_count,
-                session_id=cartId,
-                full_name=form.cleaned_data['full_name'],
-                email=form.cleaned_data['email'],
-                phone_number=form.cleaned_data['phone_number'],
-                division=form.cleaned_data['division'],
-                district=form.cleaned_data['district'],
-                address=form.cleaned_data['address'],
+        # Create an instance of your model and populate it with form data
+        delivery_info = Delivery_info.objects.create(
+            total_price=subtotal,
+            quantity=product_count,
+            session_id=cartId,
+            
+            full_name=request.POST.get('full_name'),
+            email=request.POST.get('email'),
+            phone_number=request.POST.get('phone_number'),
+            division=request.POST.get('division'),
+            district=request.POST.get('district'),
+            address=request.POST.get('address'),
+            
+            payment_method = request.POST.get('paymentMethod'),
+            transaction_number = request.POST.get('transactionNumber'),
+            transaction_id = request.POST.get('transactionId'),   
+        )
+        
+        return redirect('/payment/feed_payment')
+        
                 
-            )
-    else:
-        form = CustomerAddressForm()
-        
-    try:
-        user_add_check = Delivery_info.objects.filter(session_id=cartId).exists()
-        print(user_add_check)
-    except Exception as e :
-        pass
-        
     context = {
-        'total_price' : total_price, 
-        'form': form,
+        'subtotal' : subtotal, 
         'product_count' : product_count,
-        'user_add_check' : user_add_check,
     }
 
     return render(request, 'payment/billing-add.html', context)
@@ -98,16 +95,20 @@ def payment(request):
     return render (request, 'payment/payment.html')
 
 # fedback after complete payment
-def feed_payment(request, name):
+def feed_payment(request):
     get_user_deliv_info = Delivery_info.objects.get(session_id = _cart_id(request))
-    get_user_deliv_info.payment_method = name
+
+    context = {
+        'total_product' : get_user_deliv_info.quantity,
+        'total_product_price' : get_user_deliv_info.total_price,
+        'division' : get_user_deliv_info.division,
+        'district' : get_user_deliv_info.district,
+        'address' : get_user_deliv_info.address,
+        'payment_method' : get_user_deliv_info.payment_method,
+        'status' : get_user_deliv_info.status,
+        'order_id' : get_user_deliv_info.order_id,
+        'transaction_number' : get_user_deliv_info.transaction_number,
+        'transaction_id' : get_user_deliv_info.transaction_id,
+    }
     
-    if request.method == 'POST':
-        transaction = request.POST.get("transaction")
-        
-        get_user_deliv_info = Delivery_info.objects.get(session_id = _cart_id(request))
-        get_user_deliv_info.payment_method = name
-        get_user_deliv_info.transaction_id = transaction
-    get_user_deliv_info.save() 
-    
-    return render(request, 'payment/payment_fedback.html')
+    return render(request, 'payment/payment_fedback.html', context)

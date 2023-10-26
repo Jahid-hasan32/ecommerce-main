@@ -1,7 +1,87 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Payment {% endblock title %}
+
+{% block main %}
+
+<section id="make-payment">
+    <div class="container mt-32">
+        <h1 class="bg-c_gray text-center p-2">Congarulations! You Ordered a product successfully!!</h1>
+        <div class="flex justify-around item-center">
+                <!-- cart summary -->
+      <div class="cart_summary w-full md:w-2/3">
+        <h4 class="text-center my-4 font-bold">Your Order</h4>
+        <div class="summary px-12 md:px-4 py-4 md:py-4 my-5 md:my-0 md:ml-2 bg-c_gray rounded-md ">
+        
+          <div class="div flex justify-between px-1 py-1">
+            <span class="font-bold">Total Product: </span> <small>{{total_product}}</small>
+          </div>
+
+          <div class="div flex justify-between px-1 py-1">
+            <span class="font-bold">Price: </span> <small id="subtotal">{{total_product_price}} ৳</small>
+          </div>
+
+          <div class="class=div flex justify-between px-1 py-1">
+
+            <div>
+              <span class="font-bold">Address</span>
+            </div>
+
+            <div>
+                <span>{{division}}, {{district}}, {{address}}</span>
+            </div>
+
+          </div>
+
+          <!--  checkbox button -->
+
+          <div class="class=div flex justify-between px-1 py-1 mt-3">
+            <div class="">
+              <span class="font-bold">Payment Method</span>
+            </div>
+
+            <div class="shping_check_box ">
+              <span>{{payment_method}}</span>
+            </div>
+        </div>
+
+        <div class="class=div flex justify-between px-1 py-1 mt-3">
+            <div class="">
+              <span class="font-bold">Transaction Number</span>
+            </div>
+
+            <div class="shping_check_box ">
+              <span>{{transaction_number}}</span>
+            </div>
+        </div>
+
+        <div class="class=div flex justify-between px-1 py-1 mt-3">
+            <div class="">
+              <span class="font-bold">Transaction ID</span>
+            </div>
+
+            <div class="shping_check_box ">
+              <span>{{transaction_id}}</span>
+            </div>
+        </div>
 
 
+        <div class="class=div flex justify-between px-1 py-1 mt-3">
+            <div class="">
+              <span class="font-bold">Order ID</span>
+            </div>
 
-<h1 class="text-bold">our maneger will contact witho you as soon!! thank you.</h1>
+            <div class="shping_check_box ">
+              <span>{{order_id}}</span>
+            </div>
+        </div>
+
+      </div>
+      <a href="{% url "home" %}" class="mt-8 text-center inline-block btn_fill"> Coninue Shiping!</a>
+
+    </div>
+
+</section>
 
 
-<a href="{% url "home" %}" class="btn_fill">Go to home page</a>
+{% endblock main %}

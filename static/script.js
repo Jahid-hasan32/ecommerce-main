@@ -163,4 +163,3 @@ $(".remove_btn").click(function () {
 
 })
 
-

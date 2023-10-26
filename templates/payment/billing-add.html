@@ -5,146 +5,188 @@
 
 {% block main %}
 
-    <!-- payment section starts -->
+<!-- payment section starts -->
 
-    <section id="payment" class="mt-20 mb-20">
-        <div class="container flex flex-col justify-center gap-y-3 md:flex-row md:gap-x-2 rounded-lg py-3 px-5 shadow-lg">
-            <div class="form md:w-2/3">
-                <h3 class="text-center my-3 text-lg font-medium">Enter Your Delivary Info.</h3>
-                <form action="" method="POST" class="bg-white border shadow-md rounded px-8  py-5 mb-4">
-                    {% csrf_token %}
-                    {% for customarForm in form %}
-                    {{customarForm.label_tag}} {{customarForm}} <small class="text-red-600">{{customarForm.errors | linebreaksbr}}</small>
-                    {% endfor %}
+<section id="payment" class="mt-20 mb-20">
+  <div class="container">
 
-                    <button class="bg-c_primary py-3 text-center px-6 text-sm md:text-xl font-semibold md:px-8 mx-auto block mt-4 text-white lg:text-sm rounded ">Save</button>
-                </form>
+    <h3 class="text-center mb-5 mt-8 text-lg font-medium">Enter Your Delivary Info.</h3>
+    <form action="{% url "payment:payment_address" %}" method="POST" class=" flex flex-col justify-center gap-y-3 md:flex-row md:gap-x-2 bg-white border shadow-md rounded px-8  py-5 mb-4">
+      {% csrf_token %}
+
+      <!-- form's address section -->
+      <div class="md:w-2/3 space-y-2">
+
+        <div>
+          <label for="name">Full Name</label>
+          <input type="text" name="name" required id="name" placeholder="Your full name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        </div>
+
+        <div>
+          <label for="email">Email</label>
+          <input type="email" name="full_name" required id="email" placeholder="Email (optional)" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        </div>
+
+        <div>
+          <label for="number">Phone Number</label>
+          <input type="number" name="phone_number" required id="number" placeholder="Phone number" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        </div>
+
+        <div>
+          <label for="division">Devision</label>
+          <input type="text" name="division" required id="division" placeholder="Your Devision name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        </div>
+
+        <div>
+          <label for="district">district</label>
+          <input type="text" name="district" required id="district" placeholder="Your district name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        </div>
+
+        <div>
+          <label for="address">Address</label>
+          <input type="text" name="address" required id="address" placeholder="Upazila, Apartment, suite, etc." class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+        </div>
+
+      </div>
+
+      <!-- cart summary -->
+      <div class="cart_summary md:w-1/3">
+        <h4 class="text-center mb-4 font-bold">Order Summury</h4>
+        <div class="summary px-12 md:px-4 py-4 md:py-4 my-5 md:my-0 md:ml-2 bg-c_gray rounded-md ">
+        
+          <div class="div flex justify-between px-1 py-1">
+            <span class="font-bold">Total Product: </span> <small>{{product_count}}</small>
+          </div>
+
+          <div class="div flex justify-between px-1 py-1">
+            <span class="font-bold">SubTotal: </span> <small id="subtotal">{{subtotal}} ৳</small>
+          </div>
+
+          <hr class="h-[.1rem] my-1 bg-c_primary">
+
+          <!--  Radio button -->
+
+          <div class="class=div flex justify-between px-1 py-1">
+
+            <div>
+              <span class="font-bold">Shiping</span>
             </div>
 
-            <!-- cart summary -->
-            <div class="cart_summary md:w-1/3 md:mt-16">
-                <h4 class="text-center mb-4">Order Summury</h4>
-                <div class="summary px-12 md:px-4 py-4 md:py-4 my-5 md:my-0 md:ml-2 bg-c_gray rounded-md ">
-                    <div class="div flex justify-between px-1 py-1">
-                        <span>Total Product: </span> <small>{{product_count}}</small>
-                    </div>
-
-                    <hr class="h-[.1rem] my-1 bg-cyan-100">
-                    <div class="div flex justify-between px-1 py-1">
-                        <span class="font-bold">Total Price: </span> <small id="totalamount" >{{total_price}} ৳</small>
-                    </div>
-
-                    <!-- {% if user_add_check %}
-                    <div class="div border mt-4">
-                      <form action="{% url "payment:sslcommerz_payment_gateway" %}" method="POST">
-                        {% csrf_token %}
-                        <button class="bg-c_primary uppercase py-1 mb-3 block text-center text-white ">Pay with SSlCommerze</button>
-                      </form>
-                    </div>
-                    {% else %}
-                    <p class="text-red-700 mt-3 text-center ">Please Fill the form to continue</p>
-                    {% endif %} --> 
-                    
-                    {% if user_add_check %}
-                    <div class="div border mt-4">
-                      <a href="{% url "payment:make_payment" %}" class="bg-c_primary uppercase py-1 mb-3 block text-center text-white ">Make Payment</a>
-
-                    </div>
-                    {% else %}
-                    <p class="text-red-700 mt-3 text-center ">Please Fill the form to continue</p>
-                    {% endif %}
-
-                </div>
+            <div class="shping_check_box ">
+              <label class="block" for="radio_btn">All Bangladesh</label>
+              <input class="block" required type="radio" name="shping" id="allBD" value="120">
+              <label class="block" for="radio_btn" >120 <span>৳</span></label>
             </div>
+
+            <div class="shping_check_box ">
+              <label class="block" for="radio_btn">Dhaka</label>
+              <input class="block" required type="radio" name="shping" id="Dhaka" value="60">
+              <label class="block" for="radio_btn">60 <span>৳</span></label>
+            </div>
+
+          </div>
+
+          <!--  checkbox button -->
+
+          <div class="class=div flex justify-between px-1 py-1 mt-3">
+
+            <div class="">
+              <span class="font-bold">Payment</span>
+            </div>
+
+            <div class="shping_check_box ">
+              <input type="checkbox" id="checkbox2" class="exclusive-checkbox" name="paymentMethod" value="Bkash">
+              <label for="checkbox2">Bkash</label>
+            </div>
+
+            <div class="shping_check_box ">
+              <input type="checkbox" id="checkbox1" class="exclusive-checkbox" name="paymentMethod" value="Cash On">
+              <label for="checkbox1">Cash On</label>
+            </div>
+          </div>
+
+          <hr class="h-[.1rem] my-1 bg-c_primary">
+
+          <div>
+            <h1 class="btn_fill text-center">Our Bkash Personal</h1>
+            <h2 class="bg-c_gray text-center">018823576776</h2>
+
+            <small> প্রিয় গ্রাহক, আমরা আপনার তথ্য অনৈতিক কোন কাজে ব্যবহার না করার অঙ্গীকার করছি। শুধু মাত্র সঠিক ভাবে পণ্য পোঁছানোর জন্যেই আমরা তথ্যগুলো নিয়ে থাকি। 
+            
+              <br>
+            অর্ডার কনফার্ম করার জন্যে প্রথমে ডেলিভারি বাবদ  পে করতে হবে। দয়া করে নিচের ফর্মে যে নাম্বার থেকে পে করেছেন সেটা, এবং ট্রান্সেকশান আইডিটা লিখুন। 
+            </small>
+          </div>
+
+          <div class="flex justify-between my-2">
+            <label for="">Phone Number</label>
+            <input type="number" name="transactionNumber" required placeholder="01xxxxxxxxxx" class="px-4 py-2">
+          </div>
+
+          <div class="flex justify-between">
+            <label for="">Transaction Number</label>
+            <input type="text" name="transactionId" required placeholder="09fVwxxxxxxxxxxxxx" class="px-4 py-2">
+          </div>
+
+
+          <hr class="h-[.1rem] my-1 bg-c_primary">
+
+          <div class="div flex justify-between px-1 py-1">
+            <span class="font-bold">Total: </span> <small id="totalamount">{{subtotal}} <span>৳</span></small>
+          </div>
 
         </div>
-    </section>
 
-    <!-- payment section ends -->
+        <div class="btn">
+          <button class="bg-c_primary py-3 text-center px-6 text-sm md:text-xl font-semibold md:px-8 mx-auto block mt-4 text-white lg:text-sm rounded ">Coninue</button>
+        </div>
+      </div>
 
-{% endblock main %}
+    </form>
 
-<!-- {% block script %}
+  </div>
+</section>
 
-<script
-data-sdk-integration-source="integrationbuilder_sc"
-src="https://www.paypal.com/sdk/js?client-id=AV1G6TfqN2PmWd4GKY0pn3ANtskKvGpOfTdrnmrcLXIMyxj3n_B7UJ_4oMGAot4jiNHuNEY9be_B-GIS&components=buttons&enable-funding=venmo,paylater">
-</script>
+<!-- payment section ends -->
+
+<!-- checkbox of billing page -->
 
 <script>
-    const FUNDING_SOURCES = [
-      // EDIT FUNDING SOURCES
-        paypal.FUNDING.PAYPAL,
-        paypal.FUNDING.PAYLATER,
-        paypal.FUNDING.VENMO,
-        paypal.FUNDING.CARD
-    ];
-    FUNDING_SOURCES.forEach(fundingSource => {
-      paypal.Buttons({
-        fundingSource,
-
-        style: {
-          layout: 'vertical',
-          shape: 'rect',
-          color: (fundingSource == paypal.FUNDING.PAYLATER) ? 'gold' : '',
-        },
-
-        createOrder: async (data, actions) => {
-          try {
-            const response = await fetch("http://localhost:9597/orders", {
-              method: "POST"
-            });
-
-            const details = await response.json();
-            return details.id;
-          } catch (error) {
-            console.error(error);
-            // Handle the error or display an appropriate error message to the user
-          }
-        },
-
-        
-
-        onApprove: async (data, actions) => {
-          try {
-            const response = await fetch(`http://localhost:9597/orders/${data.orderID}/capture`, {
-              method: "POST"
-            });
-
-            const details = await response.json();
-            // Three cases to handle:
-            //   (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
-            //   (2) Other non-recoverable errors -> Show a failure message
-            //   (3) Successful transaction -> Show confirmation or thank you message
-
-            // This example reads a v2/checkout/orders capture response, propagated from the server
-            // You could use a different API or structure for your 'orderData'
-            const errorDetail = Array.isArray(details.details) && details.details[0];
-
-            if (errorDetail && errorDetail.issue === 'INSTRUMENT_DECLINED') {
-              return actions.restart();
-              // https://developer.paypal.com/docs/checkout/integration-features/funding-failure/
-            }
-
-            if (errorDetail) {
-              let msg = 'Sorry, your transaction could not be processed.';
-              msg += errorDetail.description ? ' ' + errorDetail.description : '';
-              msg += details.debug_id ? ' (' + details.debug_id + ')' : '';
-              alert(msg);
-            }
-
-            // Successful capture! For demo purposes:
-            console.log('Capture result', details, JSON.stringify(details, null, 2));
-            const transaction = details.purchase_units[0].payments.captures[0];
-            alert('Transaction ' + transaction.status + ': ' + transaction.id + 'See console for all available details');
-          } catch (error) {
-            console.error(error);
-            // Handle the error or display an appropriate error message to the user
-          }
-        },
-      }).render("#paypal-button-container");
-    })
-  </script>
 
 
-{% endblock script %} -->
+let allBD = document.getElementById("allBD");
+let dhaka = document.getElementById("Dhaka");
+let totalamount = document.getElementById("totalamount");
+
+allBD.addEventListener('click', function() {
+    console.log('clicked');
+    let m = parseInt(allBD.value);
+    let n = parseInt(totalamount.textContent); // Parse the totalamount text as an integer
+
+    totalamount.innerText = m + n; // Update the totalamount text content
+});
+
+dhaka.addEventListener('click', function() {
+    console.log('clicked');
+    let m = parseInt(dhaka.value);
+    let n = parseInt(totalamount.textContent); // Parse the totalamount text as an integer
+
+    totalamount.innerText = m + n; // Update the totalamount text content
+});
+
+
+  var checkboxes = document.querySelectorAll('.exclusive-checkbox');
+
+  checkboxes.forEach(function (checkbox) {
+    checkbox.addEventListener('change', function () {
+      checkboxes.forEach(function (otherCheckbox) {
+        if (otherCheckbox !== checkbox) {
+          otherCheckbox.checked = false;
+        }
+      });
+    });
+  });
+</script>
+
+
+{% endblock main %}

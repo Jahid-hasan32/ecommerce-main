@@ -47,6 +47,11 @@ def home(request):
 def cart(request):
     return render(request, 'cart.html')
 
+# all products show
+def all_product(request):
+    get_all_product = Product.objects.all()
+    return render(request, 'allproduct.html', {'get_all_product':get_all_product})
+
 # Products by category. 
 def product_by_cate(request, id, slug):
     product_cate     = Product.objects.filter( category__id = id, category__slug = slug)
@@ -105,6 +110,11 @@ def featured_cate(request, name):
     
     return render(request, 'featured_cate.html', context)
 
+
+# terms_condition
+def terms_condition(request):
+    return render(request, 'terms_condition.html')
+
 # shop_by_brand
 
 def shop_by_brand(request, name):
@@ -135,7 +145,7 @@ def search(request):
     return render(request, 'search.html', context)
 
 # landing page for each product. 
-@login_required
+# @login_required
 def landing_page(request, id):
     landing = get_object_or_404(ProductView, id=id)
     return render(request, 'landing_page.html', {'landing': landing})
