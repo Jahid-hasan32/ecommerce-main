@@ -91,11 +91,49 @@ var swiper = new Swiper(".mySwiper", {
 
 //  ajax implemention for quantity of cart product. 
 
+
+// add to cart 
+
+function addToCart() {
+    $(".add_to_cart").click(function(){
+        let id = $(this).attr("pid");
+        let name = $(this).attr("pname");
+        // let prod_live_update = $("#prod_live_update")
+        let value = 'added';
+        console.log(value);
+
+        // Store a reference to the clicked element
+        let clickedElement = this;
+
+        $.ajax({
+            type: 'GET',
+            url: '/cart/add-to-cart-auto',
+            data: {
+                prod_id: id,
+                prod_name: name,
+            },
+            success: function(data) {
+                console.log(data);
+                // prod_live_update.text(data.prod_counting);
+
+                // Update the text of the clicked element
+                clickedElement.innerText = value;
+            },
+            error: function(data) {
+                console.log("Error:", data);
+                // Handle the error, e.g., display an error message
+            }
+        });
+    });
+}
+
+addToCart();
+
+
 //  quantity plus. 
 $(".plus-quantity").click(function () {
     let id = $(this).attr("pid")
     let quantity_product = $(this).closest(".quantity_parent").find(".quantity-product");
-
 
     $.ajax({
         type: 'GET',
@@ -104,7 +142,6 @@ $(".plus-quantity").click(function () {
             prod_id: id
         },
         success: function (data) {
-            console.log(data);
             quantity_product.text(data.quantity);
 
             document.getElementById('totalamount').innerText = data.total_amount + '$';

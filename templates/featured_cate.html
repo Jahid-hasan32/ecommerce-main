@@ -38,8 +38,8 @@
                         <del><small class="text-c_primary font-bold">{{g_f_p.discounted_price}}</small></del>
                     </div>
                         <div class=" flex flex-col text-center gap-2">
-                            <a href="{% url "add_to_cart"  g_f_p.id g_f_p.name %}" class="btn_fill text-white">Order Now</a>
-                            <a href="{% url "add_to_cart"  g_f_p.id g_f_p.name %}" class="btn_empty">Add to card</a>
+                            <a href="{% url "order_now"  g_f_p.id g_f_p.name %}" class="btn_fill text-white">Order Now</a>
+                            <button value="prod-id" pid="{{g_f_p.id}}" pname="{{g_f_p.name}}" id="add_to_cart" class=" add_to_cart btn_fill text-white">Add to card</button>
                         </div>
                 </div>
                 {% endfor %}

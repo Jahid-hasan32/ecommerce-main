@@ -41,6 +41,7 @@ def order_save(request):
             category = category,
             created_at=timezone.now()
         )
+        
 
     # Redirect to the payment address form after creating OrderItem instances
     return redirect('/payment/payment-address')
@@ -61,6 +62,7 @@ def payment_address(request):
         subtotal += cart.quantity * cart.product.price
         
     if request.method == 'POST':
+        print(request.POST['shping'])
         # Create an instance of your model and populate it with form data
         delivery_info = Delivery_info.objects.create(
             total_price=subtotal,
@@ -77,6 +79,7 @@ def payment_address(request):
             payment_method = request.POST.get('paymentMethod'),
             transaction_number = request.POST.get('transactionNumber'),
             transaction_id = request.POST.get('transactionId'),   
+            devliv_charge = request.POST.get('shping'),   
         )
         
         return redirect('/payment/feed_payment')
@@ -96,19 +99,28 @@ def payment(request):
 
 # fedback after complete payment
 def feed_payment(request):
-    get_user_deliv_info = Delivery_info.objects.get(session_id = _cart_id(request))
-
-    context = {
-        'total_product' : get_user_deliv_info.quantity,
-        'total_product_price' : get_user_deliv_info.total_price,
-        'division' : get_user_deliv_info.division,
-        'district' : get_user_deliv_info.district,
-        'address' : get_user_deliv_info.address,
-        'payment_method' : get_user_deliv_info.payment_method,
-        'status' : get_user_deliv_info.status,
-        'order_id' : get_user_deliv_info.order_id,
-        'transaction_number' : get_user_deliv_info.transaction_number,
-        'transaction_id' : get_user_deliv_info.transaction_id,
-    }
+    get_user_delivery_info = Delivery_info.objects.filter(session_id = _cart_id(request))
     
+    for get_user_deliv_info in get_user_delivery_info:
+        
+        context = {
+            'total_product' : get_user_deliv_info.quantity,
+            'total_product_price' : get_user_deliv_info.total_price,
+            'devliv_charge' : get_user_deliv_info.devliv_charge,
+            'division' : get_user_deliv_info.division,
+            'district' : get_user_deliv_info.district,
+            'address' : get_user_deliv_info.address,
+            'payment_method' : get_user_deliv_info.payment_method,
+            'status' : get_user_deliv_info.status,
+            'order_id' : get_user_deliv_info.order_id,
+            'transaction_number' : get_user_deliv_info.transaction_number,
+            'transaction_id' : get_user_deliv_info.transaction_id,
+        }
+        
+    # cart_id = _cart_id(request)
+    # Delete items from the Cart and OrderItem models
+    # Cart.objects.filter(session_id=cart_id).delete()
+    # OrderItem.objects.filter(session_id=cart_id).delete()
+    
+            
     return render(request, 'payment/payment_fedback.html', context)

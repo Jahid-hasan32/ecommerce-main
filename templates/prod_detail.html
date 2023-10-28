@@ -37,8 +37,8 @@
                             </div>
                         </div>
                         <div class="btn_box mt-4 mx-auto flex justify-around items-center">
-                            <a href="{% url "add_to_cart" get_product.id get_product.name %}" class="btn_fill">Buy Now</a>
-                            <a href="{% url "add_to_cart" get_product.id get_product.name %}" class="btn_empty">Add to card</a>
+                            <a href="{% url "order_now" get_product.id get_product.name %}" class="btn_fill">Buy Now</a>
+                            <button value="prod-id" pid="{{get_product.id}}" pname="{{get_product.name}}" id="add_to_cart" class=" add_to_cart btn_fill text-white">Add to card</button>
                         </div>
 
                         <article class="">
@@ -70,14 +70,15 @@
                 <a href="#" class="border-b-2 border-c_primary"></a> {{get_product.Description | safe }}
             </p>
 
-            <article>
+            <!-- <article>
                 <h1 class="font-semibold text-start my-3">{{get_product.name}}</h1>
                 <ul class="px-8">
                     {{get_product.Product_information | safe}}
                 </ul>
-            </article>
+            </article> -->
 
         </div>
+        <hr class="bg-c_primary h-3">
     </section>
 
     <!-- product specifications end -->

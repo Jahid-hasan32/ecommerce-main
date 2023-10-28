@@ -34,12 +34,24 @@
 
         <div>
           <label for="division">Devision</label>
-          <input type="text" name="division" required id="division" placeholder="Your Devision name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+          <select name="division" id="division" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            <option value="Dhaka">Dhaka</option>
+            <option value="Barishal">Barishal</option>
+            <option value="Chattogram">Chattogram</option>
+            <option value="Khulna">Khulna</option>
+            <option value="Rajshahi">Rajshahi</option>
+          </select>
+          <!-- <input type="text" name="division" required id="division" placeholder="Your Devision name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"> -->
         </div>
 
         <div>
           <label for="district">district</label>
-          <input type="text" name="district" required id="district" placeholder="Your district name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+          <select name="district" id="district" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+            <option value="Dhaka">Dhaka</option>
+            <option value="Barishal">Barishal</option>
+            <option value="Chattogram">Chattogram</option>
+            <option value="Khulna">Khulna</option>
+            <option value="Rajshahi">Rajshahi</option>
         </div>
 
         <div>
@@ -86,6 +98,13 @@
 
           </div>
 
+          <hr class="h-[.1rem] my-1 bg-c_primary">
+
+          <div class="div flex justify-between px-1 py-1">
+            <span class="font-bold">Total: </span> <small id="totalamount">{{subtotal}} <span>৳</span></small>
+          </div>
+          <hr class="h-[.1rem] my-1 bg-c_primary">
+
           <!--  checkbox button -->
 
           <div class="class=div flex justify-between px-1 py-1 mt-3">
@@ -129,11 +148,7 @@
           </div>
 
 
-          <hr class="h-[.1rem] my-1 bg-c_primary">
 
-          <div class="div flex justify-between px-1 py-1">
-            <span class="font-bold">Total: </span> <small id="totalamount">{{subtotal}} <span>৳</span></small>
-          </div>
 
         </div>
 

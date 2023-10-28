@@ -40,7 +40,7 @@
                             </div>
                                 <div class=" flex flex-col text-center gap-2">
                                     <a href="{% url "add_to_cart"  all_product.id all_product.name %}" class="btn_fill text-white">Order Now</a>
-                                    <a href="{% url "add_to_cart"  all_product.id all_product.name %}" class="btn_empty">Add to card</a>
+                                    <button value="prod-id" pid="{{all_product.id}}" pname="{{all_product.name}}" id="add_to_cart" class=" add_to_cart btn_fill text-white">Add to card</button>
                                 </div>
                         </div>
                         {% endfor %}

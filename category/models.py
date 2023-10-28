@@ -29,7 +29,7 @@ class Category(BaseModel):
     
 # Subcategory Model. 
 class Subcategory(BaseModel):
-    main_category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    main_category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True, blank=True)
     # product      = models.ForeignKey(Product, on_delete=models.CASCADE)
     created_date     = models.DateField(auto_now_add=True)
     

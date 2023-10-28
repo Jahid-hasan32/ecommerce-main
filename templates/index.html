@@ -99,8 +99,8 @@
                                 <del><small class="text-c_primary font-bold">{{p_w_f.discounted_price}}</small></del>
                             </div>
                                 <div class=" flex flex-col text-center gap-2">
-                                    <a href="{% url "add_to_cart"  p_w_f.id p_w_f.name %}" class="btn_fill text-white">Order Now</a>
-                                    <a href="{% url "add_to_cart"  p_w_f.id p_w_f.name %}" class="btn_empty">Add to card</a>
+                                    <a href="{% url "order_now"  p_w_f.id p_w_f.name %}" class="btn_empty">Order Now</a>
+                                    <button value="prod-id" pid="{{p_w_f.id}}" pname="{{p_w_f.name}}" id="add_to_cart" class=" add_to_cart btn_fill text-white">Add to card</button>
                                 </div>
                         </div>
                         {% endfor %}
@@ -168,8 +168,8 @@
                                 <del><small class="text-c_primary font-bold">{{new_arr.discounted_price}}</small></del>
                             </div>
                                 <div class=" flex flex-col text-center gap-2">
-                                    <a href="{% url "add_to_cart"  new_arr.id new_arr.name %}" class="btn_fill text-white">Order Now</a>
-                                    <a href="{% url "add_to_cart"  new_arr.id new_arr.name %}" class="btn_empty">Add to card</a>
+                                    <a href="{% url "order_now"  new_arr.id new_arr.name %}" class="btn_fill text-white">Order Now</a>
+                                    <button value="prod-id" pid="{{new_arr.id}}" pname="{{new_arr.name}}" id="add_to_cart" class=" add_to_cart btn_fill text-white">Add to card</button>
                                 </div>
                         </div>
                         
@@ -200,8 +200,8 @@
                                 <del><small class="text-c_primary font-bold">{{deal.discounted_price}}</small></del>
                             </div>
                                 <div class=" flex flex-col text-center gap-2">
-                                    <a href="{% url "add_to_cart"  deal.id deal.name%}" class="btn_fill text-white">Order Now</a>
-                                    <a href="{% url "add_to_cart"  deal.id deal.name %}" class="btn_empty">Add to card</a>
+                                    <a href="{% url "order_now"  deal.id deal.name%}" class="btn_fill text-white">Order Now</a>
+                                    <button value="prod-id" pid="{{deal.id}}" pname="{{deal.name}}" id="add_to_cart" class=" add_to_cart btn_fill text-white">Add to card</button>
                                 </div>
                         </div>
                         {% endfor %}
@@ -229,8 +229,8 @@
                                 <del><small class="text-c_primary font-bold">{{best_d.discounted_price}}</small></del>
                             </div>
                                 <div class=" flex flex-col text-center gap-2">
-                                    <a href="{% url "add_to_cart"  best_d.id best_d.name %}" class="btn_fill text-white">Order Now</a>
-                                    <a href="{% url "add_to_cart"  best_d.id best_d.name %}" class="btn_empty">Add to card</a>
+                                    <a href="{% url "order_now"  best_d.id best_d.name %}" class="btn_fill text-white">Order Now</a>
+                                    <button value="prod-id" pid="{{best_d.id}}" pname="{{p_w_f.name}}" id="add_to_cart" class=" add_to_cart btn_fill text-white">Add to card</button>
                                 </div>
                         </div>
                         {% endfor %}
@@ -258,8 +258,8 @@
                                 <del><small class="text-c_primary font-bold">{{best_s.discounted_price}}</small></del>
                             </div>
                                 <div class=" flex flex-col text-center gap-2">
-                                    <a href="{% url "add_to_cart"  best_s.id best_s.name %}" class="btn_fill text-white">Order Now</a>
-                                    <a href="{% url "add_to_cart"  best_s.id best_s.name %}" class="btn_empty">Add to card</a>
+                                    <a href="{% url "order_now"  best_s.id best_s.name %}" class="btn_fill text-white">Order Now</a>
+                                    <button value="prod-id" pid="{{best_s.id}}" pname="{{best_s.name}}" id="add_to_cart" class=" add_to_cart btn_fill text-white">Add to card</button>
                                 </div>
                         </div>
                         {% endfor %}
@@ -315,8 +315,8 @@
                             <del><small class="text-c_primary font-bold">{{new_ar_g.discounted_price}}</small></del>
                         </div>
                             <div class=" flex flex-col text-center gap-2">
-                                <a href="{% url "add_to_cart"  new_ar_g.id new_ar_g.name %}" class="btn_fill text-white">Order Now</a>
-                                <a href="{% url "add_to_cart"  new_ar_g.id new_ar_g.name %}" class="btn_empty">Add to card</a>
+                                <a href="{% url "order_now"  new_ar_g.id new_ar_g.name %}" class="btn_fill text-white">Order Now</a>
+                                <button value="prod-id" pid="{{new_ar_g.id}}" pname="{{new_ar_g.name}}" id="add_to_cart" class=" add_to_cart btn_fill text-white">Add to card</button>
                             </div>
                     </div>
                     {% endfor %}

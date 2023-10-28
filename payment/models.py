@@ -18,15 +18,6 @@ class OrderItem(models.Model):
         return str(self.products)
 
 
-# payment method
-
-class Payment(models.Model):
-    payment_method = models.CharField(max_length=100)
-    transaction_id   = models.CharField(max_length=200)
-    total_price           = models.FloatField(default=0)
-    created_at  = models.DateField(auto_now=True)
-
-
 # -> user info. 
 
 class Delivery_info(models.Model):
@@ -48,13 +39,25 @@ class Delivery_info(models.Model):
     transaction_number = models.CharField(max_length=20, default="01")
     transaction_id   = models.CharField(max_length=200, null=True, blank=True)    
     total_price           = models.FloatField(default=0)
+    devliv_charge  = models.PositiveIntegerField(default=120)
     status          = models.CharField(max_length=20, default='pending', choices=list(zip(STATUS, STATUS)))
     paid        = models.BooleanField(default=False)
     created_at  = models.DateField(auto_now=True)
 
-    def __str__(self):
-        return str(self.order_id)
+    # def __str__(self):
+    #     return str(self.order_id)
     
+    # def save(self, *args, **kwargs):
+    #     # Delete related OrderItem objects
+    #     for order_item in self.orderd_products.all():
+    #         order_item.delete()
+
+    #     # Delete related Cart objects
+    #     for order_item in self.ordered_products.all():
+    #         cart = order_item.products
+    #         cart.delete()
+
+    #     super().save(*args, **kwargs)
 
 
 

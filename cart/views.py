@@ -19,13 +19,12 @@ def _cart_id(request):
     
     return cart_id
 
+# order now
 
-def add_to_cart(request, id, name):
+def order_now(request, id, name):
     user = request.user if request.user.is_authenticated else None
     cart_id = _cart_id(request)
-    print('-----------------------')
-    print(cart_id)
-    print('-----------------------')
+
     
     get_product = get_object_or_404(Product, id=id, name=name)
     if request.user.is_authenticated:
@@ -46,13 +45,66 @@ def add_to_cart(request, id, name):
 
     return redirect('/cart/show-cart')
 
+def check(request):
+    if request.method == 'GET':
+        prod_id = request.GET.get('prod_id')
+        prod_name = request.GET.get('prod_name')
+
+        data = {
+            'prod_id' : prod_id,
+            'prod_name' : prod_name
+        }
+        return JsonResponse(data)
+
+#  add to cart 
+def add_to_cart(request):
+    user = request.user if request.user.is_authenticated else None
+    cart_id = _cart_id(request)
+
+    id = None
+    name = None
+    
+    if request.method == 'GET':
+        id = request.GET.get('prod_id')
+        name = request.GET.get('prod_name')
+        
+        
+    get_product = get_object_or_404(Product, id=id, name=name)
+    if request.user.is_authenticated:
+        cart_item, created = Cart.objects.get_or_create(
+            product=get_product,
+            user = user,
+            session_id=cart_id  # Use the cart_id function to get the cart identifier
+        )
+    else:        
+        cart_item, created = Cart.objects.get_or_create(
+            product=get_product,
+            session_id=cart_id  # Use the cart_id function to get the cart identifier
+        )
+
+    if not created:
+        cart_item.quantity += 1
+        cart_item.save()
+        
+    prod_count = Cart.objects.filter(session_id = cart_id)
+    
+    prod_counting = 0
+    for pr_co in prod_count:
+        prod_counting += pr_co.quantity
+        
+    data = {
+        'prod_counting' : prod_counting
+    }
+    return JsonResponse(data)
+
+
 def showCart(request):
     user = request.user if request.user.is_authenticated else None
 
     # Use the cart_id function to get the cart identifier
     cart_id = _cart_id(request)
 
-    product_count = []
+    product_count = 0
     if request.user.is_authenticated:
         fetch_product_from_cart = Cart.objects.filter(session_id=cart_id, user = user)
     else:
@@ -61,13 +113,9 @@ def showCart(request):
 
     if fetch_product_from_cart:
         for cart_item in fetch_product_from_cart:
-            product_count.append(cart_item.quantity)
-
-    total_quantity = sum(product_count)
+            product_count += cart_item.quantity
 
     amount = 0
-    delivery_charge = 120
-    total_amount = 0
     prod_from_cart = [p for p in Cart.objects.filter(session_id=cart_id, user=user)]
 
     if prod_from_cart:
@@ -75,14 +123,13 @@ def showCart(request):
             tempAmount = product.quantity * product.product.price
             amount += tempAmount
 
-    total_amount = amount + delivery_charge
 
     context = {
         'fetch_product_from_cart': fetch_product_from_cart,
-        'product_count': total_quantity,
+        'product_count': product_count,
         'amount': amount,
-        'total_amount': total_amount,
-        'delivery_charge' : delivery_charge,
+        'total_amount': amount, 
+        
     }
     return render(request, 'cart.html', context)
 
@@ -106,14 +153,10 @@ def pluscart(request):
         amount = sum(product.quantity * product.product.price for product in prod_from_cart)
         
         
-        delivery_charge = 120
-        total_amount = amount + delivery_charge
-    
         data = {
-            'total_amount': total_amount, 
+            'total_amount': amount, 
             'quantity': cart_product.quantity,
             'amount': amount,   
-            'delivery_charge':  delivery_charge,
         }
         return JsonResponse(data)
        
@@ -136,14 +179,11 @@ def minuscart(request):
         amount = sum(product.quantity * product.product.price for product in prod_from_cart)
         
         
-        delivery_charge = 120
-        total_amount = amount + delivery_charge
     
         data = {
-            'total_amount': total_amount, 
+            'total_amount': amount, 
             'quantity': cart_product.quantity,
             'amount': amount,   
-            'delivery_charge':  delivery_charge,
         }
         return JsonResponse(data) 
     
@@ -166,11 +206,8 @@ def remove_cart(request):
         amount = sum(product.quantity * product.product.price for product in prod_from_cart)
         
         
-        delivery_charge = 120
-        total_amount = amount + delivery_charge
-    
         data = {
-            'total_amount' : total_amount, 
+            'total_amount' : amount, 
             'quantity' : cart_product.quantity,
             'amount' : amount,   
         }

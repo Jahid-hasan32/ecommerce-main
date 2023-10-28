@@ -53,8 +53,8 @@ products by category
                                     <del><small class="text-c_primary font-bold">{{prod_c.discounted_price}}</small></del>
                                 </div>
                                     <div class=" flex flex-col text-center gap-2">
-                                        <a href="{% url "add_to_cart" prod_c.id prod_c.name %}" class="btn_fill text-white">Order Now</a>
-                                        <a href="{% url "add_to_cart" prod_c.id prod_c.name %}" class="btn_empty">Add to card</a>
+                                        <a href="{% url "order_now" prod_c.id prod_c.name %}" class="btn_fill text-white">Order Now</a>
+                                        <button value="prod-id" pid="{{prod_c.id}}" pname="{{prod_c.name}}" id="add_to_cart" class=" add_to_cart btn_fill text-white">Add to card</button>
                                     </div>
                             </div>
 
