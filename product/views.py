@@ -43,9 +43,6 @@ def home(request):
 
     return render(request, 'index.html', context)
 
-# cart 
-def cart(request):
-    return render(request, 'cart.html')
 
 # all products show
 def all_product(request):

@@ -18,7 +18,6 @@ urlpatterns = [
     
     path('landing/<int:id>/', views.landing_page, name='landing_page'),
     
-    path('cart_section/', views.cart, name="cart"),
     path('produt-detail/<int:id>/ <str:name>/', views.prod_detail, name = "prod_detail"),
     path('all_product/', views.all_product, name="all_product"),
     path('products_by/category/<str:id>/<slug:slug>/', views.product_by_cate, name='product_by_cate'),

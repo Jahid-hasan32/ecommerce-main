@@ -1,9 +1,27 @@
 from django.contrib import admin
 from . models import Delivery_info, OrderItem 
+import csv
+from django.http import HttpResponse
+
+
+def export_to_csv(modeladmin, request, queryset):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="delivery_info.csv"'
+    
+    writer = csv.writer(response)
+    writer.writerow(['Name', 'Phone', 'Division','district', 'transaction_id', 'paid' ])  # Add column headers
+
+    for obj in queryset:
+        writer.writerow([obj.full_name, obj.phone_number, obj.division, obj.district, obj.transaction_id, obj.paid ])  # Add fields to export
+
+    return response
+
+export_to_csv.short_description = "Export selected records to CSV"
 
     
 @admin.register(Delivery_info)
 class AdminDelivery_info(admin.ModelAdmin):
+    actions = [export_to_csv]
     list_display = ['session_id','full_name','phone_number','division','district','transaction_id','paid']
     search_fields = ['session_id','phone_number','division','district']
 

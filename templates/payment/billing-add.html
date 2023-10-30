@@ -93,7 +93,7 @@
             </div>
 
             <div class="shping_check_box ">
-              <label class="block" for="radio_btn">Dhaka</label>
+              <label class="block" for="radio_btn">Inside Dhaka</label>
               <input class="block" required type="radio" name="shping" id="Dhaka" value="60">
               <label class="block" for="radio_btn">60 <span>৳</span></label>
             </div>
@@ -116,17 +116,20 @@
             </div>
 
             <div class="shping_check_box ">
-              <input type="checkbox" id="checkbox2" class="exclusive-checkbox" name="paymentMethod" value="Bkash">
-              <label for="checkbox2">Bkash</label>
+              <input type="checkbox" id="full_payment" class="exclusive-checkbox" name="payment" value="Full Payment" id="full_payment">
+              <label for="full_payment">Full Payment</label>
             </div>
 
             <div class="shping_check_box ">
-              <input type="checkbox" id="checkbox1" class="exclusive-checkbox" name="paymentMethod" value="Cash On">
-              <label for="checkbox1">Cash On</label>
+              <input type="checkbox" id="cash_on" class="exclusive-checkbox" name="payment" value="Cash On" id="cash_on">
+              <label for="cash_on">Cash On</label>
             </div>
           </div>
-
           <hr class="h-[.1rem] my-1 bg-c_primary">
+
+          <div id="popup" style="display: none;">
+            <p class="text-center py-2 border transition rounded bg-c_primary text-white">To confirm the order, you have to pay for the delivery first.  </p>
+          </div>
 
           <div>
             <h1 class="btn_fill text-center">Our Bkash Personal</h1>
@@ -134,8 +137,6 @@
 
             <small> প্রিয় গ্রাহক, আমরা আপনার তথ্য অনৈতিক কোন কাজে ব্যবহার না করার অঙ্গীকার করছি। শুধু মাত্র সঠিক ভাবে পণ্য পোঁছানোর জন্যেই আমরা তথ্যগুলো নিয়ে থাকি। 
             
-              <br>
-            অর্ডার কনফার্ম করার জন্যে প্রথমে ডেলিভারি বাবদ  পে করতে হবে। দয়া করে নিচের ফর্মে যে নাম্বার থেকে পে করেছেন সেটা, এবং ট্রান্সেকশান আইডিটা লিখুন। 
             </small>
           </div>
 
@@ -168,13 +169,14 @@
 
 <script>
 
+// shiping
 
-let allBD = document.getElementById("allBD");
+function shiping() {
+  let allBD = document.getElementById("allBD");
 let dhaka = document.getElementById("Dhaka");
 let totalamount = document.getElementById("totalamount");
 
 allBD.addEventListener('click', function() {
-    console.log('clicked');
     let m = parseInt(allBD.value);
     let n = parseInt(totalamount.textContent); // Parse the totalamount text as an integer
 
@@ -188,19 +190,43 @@ dhaka.addEventListener('click', function() {
 
     totalamount.innerText = m + n; // Update the totalamount text content
 });
+}
 
+shiping()
 
+  // payment
+
+function payment() {
   var checkboxes = document.querySelectorAll('.exclusive-checkbox');
 
-  checkboxes.forEach(function (checkbox) {
-    checkbox.addEventListener('change', function () {
-      checkboxes.forEach(function (otherCheckbox) {
-        if (otherCheckbox !== checkbox) {
-          otherCheckbox.checked = false;
-        }
-      });
+checkboxes.forEach(function (checkbox) {
+  checkbox.addEventListener('change', function () {
+    checkboxes.forEach(function (otherCheckbox) {
+      if (otherCheckbox !== checkbox) {
+        otherCheckbox.checked = false;
+      }
     });
   });
+});
+}
+
+payment()
+
+  // cash on `popup`
+  
+  let cash_on = document.getElementById("cash_on");
+  let full_payment = document.getElementById("full_payment");
+  let popup = document.getElementById("popup");
+  console.log('helloo');
+
+  cash_on.addEventListener('click', function() {
+    popup.style.display = 'block'
+  })
+
+  full_payment.addEventListener('click', function() {
+    popup.style.display = 'none'
+  })
+
 </script>
 
 

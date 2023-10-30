@@ -17,7 +17,6 @@ class OrderItem(models.Model):
     def __str__(self):
         return str(self.products)
 
-
 # -> user info. 
 
 class Delivery_info(models.Model):
@@ -35,10 +34,11 @@ class Delivery_info(models.Model):
     quantity     = models.PositiveIntegerField()
     orderd_products = models.ManyToManyField(OrderItem)
     
-    payment_method = models.CharField(max_length=100,default="Cash On")
+    payment = models.CharField(max_length=100,default="Cash On")
     transaction_number = models.CharField(max_length=20, default="01")
     transaction_id   = models.CharField(max_length=200, null=True, blank=True)    
     total_price           = models.FloatField(default=0)
+    # devliv_charge_pay  = models.PositiveIntegerField(default=120)
     devliv_charge  = models.PositiveIntegerField(default=120)
     status          = models.CharField(max_length=20, default='pending', choices=list(zip(STATUS, STATUS)))
     paid        = models.BooleanField(default=False)

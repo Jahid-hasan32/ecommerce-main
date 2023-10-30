@@ -62,7 +62,7 @@ def payment_address(request):
         subtotal += cart.quantity * cart.product.price
         
     if request.method == 'POST':
-        print(request.POST['shping'])
+        print(request.POST['payment'])
         # Create an instance of your model and populate it with form data
         delivery_info = Delivery_info.objects.create(
             total_price=subtotal,
@@ -76,7 +76,7 @@ def payment_address(request):
             district=request.POST.get('district'),
             address=request.POST.get('address'),
             
-            payment_method = request.POST.get('paymentMethod'),
+            payment = request.POST.get('payment'),
             transaction_number = request.POST.get('transactionNumber'),
             transaction_id = request.POST.get('transactionId'),   
             devliv_charge = request.POST.get('shping'),   
@@ -103,14 +103,19 @@ def feed_payment(request):
     
     for get_user_deliv_info in get_user_delivery_info:
         
+        if get_user_deliv_info.payment == "Cash On":
+            deli_charge_paid = "Yes"
+        else:
+            deli_charge_paid = "No"
         context = {
             'total_product' : get_user_deliv_info.quantity,
             'total_product_price' : get_user_deliv_info.total_price,
-            'devliv_charge' : get_user_deliv_info.devliv_charge,
             'division' : get_user_deliv_info.division,
             'district' : get_user_deliv_info.district,
             'address' : get_user_deliv_info.address,
-            'payment_method' : get_user_deliv_info.payment_method,
+            'devlivery_charge': get_user_deliv_info.devliv_charge,
+            'deli_charge_paid' : deli_charge_paid,
+            'payment_method' : get_user_deliv_info.payment,
             'status' : get_user_deliv_info.status,
             'order_id' : get_user_deliv_info.order_id,
             'transaction_number' : get_user_deliv_info.transaction_number,
@@ -119,8 +124,8 @@ def feed_payment(request):
         
     # cart_id = _cart_id(request)
     # Delete items from the Cart and OrderItem models
-    # Cart.objects.filter(session_id=cart_id).delete()
     # OrderItem.objects.filter(session_id=cart_id).delete()
+    # Cart.objects.filter(session_id=cart_id).delete()
     
             
     return render(request, 'payment/payment_fedback.html', context)

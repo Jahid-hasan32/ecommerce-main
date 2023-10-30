@@ -105,6 +105,8 @@ def showCart(request):
     cart_id = _cart_id(request)
 
     product_count = 0
+    show_chekout_btn = False
+
     if request.user.is_authenticated:
         fetch_product_from_cart = Cart.objects.filter(session_id=cart_id, user = user)
     else:
@@ -114,7 +116,14 @@ def showCart(request):
     if fetch_product_from_cart:
         for cart_item in fetch_product_from_cart:
             product_count += cart_item.quantity
-
+            
+    # print('-------------------')
+    # print(product_count)
+    # print('-------------------') 
+    
+    if product_count >= 1 : # to disabled or un-disabled chekcout btn in cart page. 
+        show_chekout_btn = True
+        
     amount = 0
     prod_from_cart = [p for p in Cart.objects.filter(session_id=cart_id, user=user)]
 
@@ -129,6 +138,7 @@ def showCart(request):
         'product_count': product_count,
         'amount': amount,
         'total_amount': amount, 
+        'show_chekout_btn': show_chekout_btn, 
         
     }
     return render(request, 'cart.html', context)

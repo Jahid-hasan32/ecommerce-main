@@ -22,12 +22,22 @@
           </div> -->
 
           <div class="div flex justify-between px-1 py-1">
-            <span class="font-bold">Price: </span> <small id="subtotal">{{total_product_price}} ৳</small>
+            <span class="font-bold">Total Products Price: </span> <small id="subtotal">{{total_product_price}} ৳</small>
           </div>
 
           <div class="div flex justify-between px-1 py-1">
-            <span class="font-bold">Delivery Charge: </span> <small id="subtotal">{{devliv_charge}} ৳</small>
+            <span class="font-bold">Delivery Charge: </span> <small id="subtotal">{{devlivery_charge}} ৳</small>
           </div>
+          
+          {% if deli_charge_paid  == "Yes" %}
+          <div class="div flex justify-between px-1 py-1">
+            <span class="font-bold">Delivery Charge Paid: </span> <small id="subtotal">{{deli_charge_paid}} </small>
+          </div>
+          {% elif deli_charge_paid  == "No" %}
+          <div class="div flex justify-between px-1 py-1">
+            <span class="font-bold">Is Paid: </span> <small id="subtotal">Paid </small>
+          </div>
+          {% endif %}
 
           <div class="class=div flex justify-between px-1 py-1">
 
